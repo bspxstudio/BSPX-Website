@@ -2,8 +2,8 @@ import React from "react";
 import { Phone, MessageCircle } from "lucide-react";
 
 export default function FloatingContact() {
-  const phoneNumber = "+919876543210";
-  const whatsappNumber = "919876543210";
+  const phoneNumber = "+918531985733";
+  const whatsappNumber = "918531985733";
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">

@@ -13,7 +13,7 @@ import BirthdayShoots from "../../assests/gallery/Birthday Shoots.webp";
 import CoupleShoots from "../../assests/gallery/Couple Shoots.webp";
 import PrePostWedding from "../../assests/gallery/Pre & Post Wedding.webp";
 
-const WHATSAPP_NUMBER = "917075764500";
+const WHATSAPP_NUMBER = "918531985733";
 
 const slides = [
   {
