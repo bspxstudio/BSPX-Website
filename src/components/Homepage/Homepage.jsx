@@ -11,6 +11,7 @@ import FAQ from '../Homepage/FAQ';
 import Testimonials from '../Homepage/Testimonials';
 import Contact from '../Homepage/Contact';
 import Infinityscroll from '../Homepage/infinityscrolling';
+import Gallery2 from '../Homepage/Gallery2';
 
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
       <About />
       <Work />
       <Process />
+        <Gallery2 />
       <Blogsec />
       <FAQ />
       <Testimonials />
