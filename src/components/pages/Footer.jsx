@@ -80,11 +80,12 @@ export default function Footer() {
               Brand
             </p>
 
-            <h3 className="mt-6 font-['Bebas_Neue',sans-serif] text-5xl font-normal leading-none tracking-wide text-white">
-              BSPX
-              <br />
-              Studio
-            </h3>
+            {/* Changed: Replaced the text heading with the logo and made it larger */}
+            <img
+              src={Logo}
+              alt="BSPX Studio Logo"
+              className="mt-6 h-20 w-20 object-contain brightness-0 invert"
+            />
 
             <p className="mt-6 text-sm leading-relaxed text-white/50">
               Photography & Video – Coimbatore | Serving All India.

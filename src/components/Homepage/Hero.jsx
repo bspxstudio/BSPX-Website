@@ -101,23 +101,23 @@ export default function Hero() {
     const diff = (index - current + total) % total;
 
     if (diff === 0) {
-      return "z-40 translate-x-0 scale-100 opacity-100";
+      return "z-40 translate-x-0 translate-y-0 scale-100 rotate-0 opacity-100 shadow-[0_20px_70px_rgba(212,165,58,0.25)] border-[#D4A53A]/50";
     }
 
     if (diff === 1) {
-      return "z-30 translate-x-[220px] xl:translate-x-[300px] 2xl:translate-x-[360px] scale-[0.78] opacity-55 blur-[1px]";
+      return "z-30 translate-x-[180px] translate-y-[40px] xl:translate-x-[250px] xl:translate-y-[60px] 2xl:translate-x-[300px] scale-[0.85] rotate-[8deg] opacity-60 blur-[1px] border-white/10";
     }
 
     if (diff === total - 1) {
-      return "z-30 -translate-x-[220px] xl:-translate-x-[300px] 2xl:-translate-x-[360px] scale-[0.78] opacity-55 blur-[1px]";
+      return "z-30 -translate-x-[180px] -translate-y-[40px] xl:-translate-x-[250px] xl:-translate-y-[60px] 2xl:-translate-x-[300px] scale-[0.85] -rotate-[8deg] opacity-60 blur-[1px] border-white/10";
     }
 
-    return "z-10 translate-x-0 scale-[0.6] opacity-0";
+    return "z-10 translate-x-0 translate-y-[120px] scale-[0.6] opacity-0 border-white/5";
   };
 
   return (
     <section className="relative w-full overflow-hidden bg-[#050505] text-white font-['Poppins',sans-serif]">
-      <div className="relative min-h-[100svh] w-full overflow-hidden sm:min-h-[820px] md:min-h-[860px] lg:min-h-[820px] xl:min-h-[900px]">
+      <div className="relative min-h-[100svh] w-full overflow-hidden sm:min-h-[820px] md:min-h-[860px] lg:min-h-[860px] xl:min-h-[940px]">
         {/* ================= BACKGROUND IMAGE LAYER ================= */}
         <div className="absolute inset-0">
           {slides.map((slide, index) => (
@@ -129,14 +129,20 @@ export default function Hero() {
                   : "scale-110 opacity-0"
               }`}
             >
+              {/* Changed: Removed grayscale on mobile so it serves as a vibrant background, kept it on desktop (lg:grayscale) */}
               <img
                 src={slide.img}
                 alt={slide.shortTitle}
-                className="h-full w-full object-cover grayscale"
+                className="h-full w-full object-cover lg:grayscale"
               />
 
-              <div className="absolute inset-0 bg-black/80" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/75 to-[#050505]/90" />
+              {/* Changed: Lightened the black overlay on mobile so the image is clearly visible */}
+              <div className="absolute inset-0 bg-black/40 lg:bg-black/80" />
+              
+              {/* Changed: Hid the heavy horizontal gradient on mobile, keep only for desktop layout */}
+              <div className="absolute inset-0 hidden bg-gradient-to-r from-[#050505] via-[#050505]/75 to-[#050505]/90 lg:block" />
+              
+              {/* Bottom gradient to ensure text readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/80" />
             </div>
           ))}
@@ -153,14 +159,15 @@ export default function Hero() {
         {/* ================= MAIN HERO CONTENT ================= */}
         <div className="relative z-30 mx-auto grid min-h-[100svh] w-full max-w-[1900px] grid-cols-1 items-center gap-8 px-4 pb-52 pt-10 min-[380px]:pb-48 min-[380px]:pt-14 sm:min-h-[820px] sm:px-6 sm:pb-48 md:min-h-[860px] md:px-10 md:pt-20 lg:min-h-[820px] lg:grid-cols-[0.9fr_1.1fr] lg:px-12 lg:pb-40 xl:min-h-[900px] xl:grid-cols-[0.8fr_1.2fr] xl:px-16">
           {/* ================= LEFT CONTENT CARD ================= */}
-          <div className="w-full max-w-2xl border border-white/10 bg-black/45 p-4 backdrop-blur-2xl min-[380px]:p-5 sm:p-7 md:p-9 lg:p-10">
+          {/* Changed: Increased max-w on lg and xl screens to give the heading more horizontal width */}
+          <div className="w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl border border-white/10 bg-black/45 p-4 backdrop-blur-2xl min-[380px]:p-5 sm:p-7 md:p-9 lg:p-10">
             <div className="mb-4 inline-flex max-w-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur-xl md:mb-7 md:px-5">
               <span className="font-['Montserrat',sans-serif] text-[8px] font-semibold uppercase tracking-[0.18em] text-[#D4A53A] min-[380px]:text-[9px] min-[380px]:tracking-[0.24em] sm:text-[10px] sm:tracking-[0.32em]">
                 {activeSlide.tag}
               </span>
             </div>
 
-            <h1 className="whitespace-pre-line font-['Bebas_Neue',sans-serif] text-[2.8rem] font-normal uppercase leading-[0.88] tracking-wide text-white min-[380px]:text-[3.4rem] sm:text-[4.7rem] md:text-[6rem] lg:text-[5.8rem] xl:text-8xl">
+            <h1 className="w-full whitespace-pre-line font-['Bebas_Neue',sans-serif] text-[2.8rem] font-normal uppercase leading-[0.88] tracking-wide text-white min-[380px]:text-[3.4rem] sm:text-[4.7rem] md:text-[6rem] lg:text-[5.8rem] xl:text-8xl">
               {activeSlide.title}
             </h1>
 
@@ -193,7 +200,7 @@ export default function Hero() {
 
             <div className="mt-5 flex items-start gap-3 text-[11px] font-semibold leading-relaxed text-white/55 min-[380px]:text-xs">
               <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#D4A53A] min-[380px]:h-4 min-[380px]:w-4" />
-              <span>+91 7075 764 500 · Coimbatore · Across India</span>
+              <span>+918531985733 · Coimbatore · Across India</span>
             </div>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-9 md:gap-4">
@@ -216,16 +223,16 @@ export default function Hero() {
 
           {/* ================= DESKTOP SHOWCASE SLIDESHOW ================= */}
           <div className="relative hidden min-h-[560px] items-center justify-center lg:flex xl:min-h-[680px]">
-            <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 xl:h-[560px] xl:w-[560px] 2xl:h-[620px] 2xl:w-[620px]" />
+            <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[40px] border border-white/5 bg-gradient-to-tr from-white/5 to-transparent xl:h-[560px] xl:w-[560px] 2xl:h-[620px] 2xl:w-[620px] transition-transform duration-1000" />
 
-            <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#D4A53A]/20 xl:h-[430px] xl:w-[430px] 2xl:h-[460px] 2xl:w-[460px]" />
+            <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[30px] border border-[#D4A53A]/20 bg-gradient-to-bl from-[#D4A53A]/5 to-transparent xl:h-[430px] xl:w-[430px] 2xl:h-[460px] 2xl:w-[460px] transition-transform duration-1000" />
 
             <div className="relative h-[520px] w-[520px] xl:h-[620px] xl:w-[680px] 2xl:w-[780px]">
               {slides.map((slide, index) => (
                 <button
                   key={slide.id}
                   onClick={() => setCurrent(index)}
-                  className={`absolute left-1/2 top-1/2 h-[460px] w-[290px] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-white/10 bg-black shadow-[0_40px_120px_rgba(0,0,0,0.75)] transition-all duration-700 ease-out xl:h-[520px] xl:w-[330px] 2xl:h-[560px] 2xl:w-[360px] ${getPositionClass(
+                  className={`absolute left-1/2 top-1/2 h-[460px] w-[290px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border bg-black shadow-[0_40px_120px_rgba(0,0,0,0.75)] transition-all duration-[900ms] ease-[cubic-bezier(0.25,1,0.5,1)] xl:h-[520px] xl:w-[330px] 2xl:h-[560px] 2xl:w-[360px] ${getPositionClass(
                     index
                   )}`}
                 >
@@ -259,23 +266,6 @@ export default function Hero() {
                 </button>
               ))}
             </div>
-          </div>
-        </div>
-
-        {/* ================= MOBILE ACTIVE IMAGE PREVIEW ================= */}
-        <div className="absolute bottom-[132px] right-4 z-30 block h-24 w-16 overflow-hidden border border-white/15 bg-black shadow-2xl min-[380px]:bottom-[150px] min-[380px]:h-28 min-[380px]:w-20 sm:bottom-[165px] sm:right-6 sm:h-36 sm:w-24 md:bottom-[170px] md:right-10 md:h-44 md:w-32 lg:hidden">
-          <img
-            src={activeSlide.img}
-            alt={activeSlide.shortTitle}
-            className="h-full w-full object-cover"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
-          <div className="absolute bottom-2 left-2 right-2">
-            <p className="truncate font-['Montserrat',sans-serif] text-[7px] font-semibold uppercase tracking-[0.16em] text-white/80 sm:text-[8px]">
-              {activeSlide.shortTitle}
-            </p>
           </div>
         </div>
 
