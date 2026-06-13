@@ -9,17 +9,30 @@ import {
   Images,
 } from "lucide-react";
 
-import Image1 from "../../assests/gallery/gallery1.webp";
-import Image2 from "../../assests/gallery/gallery2.webp";
-import Image3 from "../../assests/gallery/gallery3.webp";
-import Image4 from "../../assests/gallery/gallery4.webp";
-import Image5 from "../../assests/gallery/gallery2.webp";
-import Image6 from "../../assests/gallery/gallery3.webp";
+// Proper category images from assets/gallery
+import BabyShoots from "../../assests/gallery/Baby Shoots.webp";
+import BirthdayShoots from "../../assests/gallery/Birthday Shoots.webp";
+import CinematicReels from "../../assests/gallery/cinematic Reels.webp";
+import CoupleShoots from "../../assests/gallery/Couple Shoots.webp";
+import EventPhotography from "../../assests/gallery/Event Photography.webp";
+import HighlightEdits from "../../assests/gallery/Highlight Edits.webp";
+import ModelShoots from "../../assests/gallery/Model Shoots.webp";
+import OutdoorPortraits from "../../assests/gallery/Outdoor Portraits.webp";
+import PhotoFrames from "../../assests/gallery/Photo Frames.webp";
+import PrePostWedding from "../../assests/gallery/Pre & Post Wedding.webp";
+
+// Additional gallery images also available in your folder
+import Gallery1 from "../../assests/gallery/gallery1.webp";
+import Gallery2 from "../../assests/gallery/gallery2.webp";
+import Gallery3 from "../../assests/gallery/gallery3.webp";
+import Gallery4 from "../../assests/gallery/gallery4.webp";
+
+const WHATSAPP_NUMBER = "917075764500";
 
 const galleryItems = [
   {
     id: 1,
-    img: Image1,
+    img: OutdoorPortraits,
     category: "Outdoor Portraits",
     title: "Natural Light Stories",
     views: 450,
@@ -28,7 +41,7 @@ const galleryItems = [
   },
   {
     id: 2,
-    img: Image2,
+    img: BirthdayShoots,
     category: "Birthday Shoots",
     title: "Celebration Moments",
     views: 280,
@@ -37,7 +50,7 @@ const galleryItems = [
   },
   {
     id: 3,
-    img: Image3,
+    img: CoupleShoots,
     category: "Couple Shoots",
     title: "Love In Frames",
     views: 620,
@@ -46,7 +59,7 @@ const galleryItems = [
   },
   {
     id: 4,
-    img: Image4,
+    img: BabyShoots,
     category: "Baby Shoots",
     title: "Little Memories",
     views: 390,
@@ -55,7 +68,7 @@ const galleryItems = [
   },
   {
     id: 5,
-    img: Image5,
+    img: CinematicReels,
     category: "Cinematic Reels",
     title: "Short Visual Stories",
     views: 310,
@@ -64,7 +77,7 @@ const galleryItems = [
   },
   {
     id: 6,
-    img: Image6,
+    img: HighlightEdits,
     category: "Highlight Edits",
     title: "Memory Films",
     views: 400,
@@ -73,7 +86,7 @@ const galleryItems = [
   },
   {
     id: 7,
-    img: Image3,
+    img: PrePostWedding,
     category: "Pre & Post Wedding",
     title: "Wedding Journey",
     views: 210,
@@ -82,18 +95,72 @@ const galleryItems = [
   },
   {
     id: 8,
-    img: Image4,
+    img: EventPhotography,
     category: "Event Photography",
     title: "Live Event Coverage",
     views: 520,
     likes: 380,
     desc: "Complete event photography coverage for birthdays, gatherings, family functions, launches, and special occasions.",
   },
+  {
+    id: 9,
+    img: ModelShoots,
+    category: "Model Shoots",
+    title: "Portfolio Frames",
+    views: 360,
+    likes: 225,
+    desc: "Fashion, editorial, and model portfolio shoots designed for confidence, styling, and professional visual identity.",
+  },
+  {
+    id: 10,
+    img: PhotoFrames,
+    category: "Photo Frames",
+    title: "Printed Memories",
+    views: 185,
+    likes: 120,
+    desc: "Premium photo frames and printed memories for homes, gifting, family walls, desks, and keepsakes.",
+  },
+  {
+    id: 11,
+    img: Gallery1,
+    category: "Creative Portraits",
+    title: "Signature Frames",
+    views: 430,
+    likes: 295,
+    desc: "Creative portrait frames designed for personal branding, profile photos, lifestyle stories, and visual identity.",
+  },
+  {
+    id: 12,
+    img: Gallery2,
+    category: "Lifestyle Shoots",
+    title: "Everyday Stories",
+    views: 370,
+    likes: 250,
+    desc: "Lifestyle-led photography sessions that capture natural movement, personality, environment, and authentic moments.",
+  },
+  {
+    id: 13,
+    img: Gallery3,
+    category: "Editorial Moments",
+    title: "Styled Visuals",
+    views: 490,
+    likes: 315,
+    desc: "Editorial-style visual storytelling for creators, models, couples, and clients who want a premium visual language.",
+  },
+  {
+    id: 14,
+    img: Gallery4,
+    category: "Studio Memories",
+    title: "Classic Frames",
+    views: 410,
+    likes: 275,
+    desc: "Clean, timeless photography frames for families, individuals, celebrations, and meaningful personal milestones.",
+  },
 ];
 
 const displayItems = [
   ...galleryItems,
-  ...galleryItems.slice(0, 7),
+  galleryItems[0],
 ].map((item, index) => ({
   ...item,
   displayId: `${item.id}-${index}`,
@@ -117,11 +184,15 @@ export default function GalleryGrid() {
     const message = encodeURIComponent(
       `Hello BSPX Studio! I would like to know more about: ${title}`
     );
-    window.open(`https://wa.me/?text=${message}`, "_blank");
+
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,
+      "_blank"
+    );
   };
 
   return (
-    <section className="bg-white font-[family-name:Inter,sans-serif] text-stone-950 overflow-hidden">
+    <section className="overflow-hidden bg-white font-[family-name:Inter,sans-serif] text-stone-950">
       <style>{`
         .no-scrollbar {
           -ms-overflow-style: none;
@@ -134,7 +205,7 @@ export default function GalleryGrid() {
       `}</style>
 
       {/* ================= EDITORIAL HERO GALLERY ================= */}
-      <div className="relative bg-white overflow-hidden py-10">
+      <div className="relative overflow-hidden bg-white py-10">
         <div className="grid min-h-[520px] grid-cols-1 lg:grid-cols-[300px_1fr]">
           {/* Left Editorial Counter */}
           <aside className="relative z-20 flex flex-col justify-center border-r border-stone-100 bg-white px-8 py-12 lg:px-10">
@@ -264,7 +335,7 @@ export default function GalleryGrid() {
             </button>
           </header>
 
-          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {galleryItems.map((member) => (
               <div
                 key={member.id}
@@ -370,6 +441,7 @@ export default function GalleryGrid() {
 
             <button
               onClick={closeModal}
+              aria-label="Close modal"
               className="absolute right-5 top-5 bg-white p-3 text-stone-950 shadow-lg transition hover:bg-stone-100"
             >
               <X className="h-4 w-4" />

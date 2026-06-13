@@ -8,18 +8,24 @@ import {
   Sparkles,
 } from "lucide-react";
 
-// Importing your local assets
-import Image1 from "../../assests/gallery/gallery1.webp";
-import Image2 from "../../assests/gallery/gallery2.webp";
-import Image3 from "../../assests/gallery/gallery3.webp";
-import Image4 from "../../assests/gallery/gallery4.webp";
-import Image5 from "../../assests/gallery/gallery2.webp";
-import Image6 from "../../assests/gallery/gallery3.webp";
+// Importing proper local assets from assets/gallery
+import OutdoorPortraits from "../../assests/gallery/Outdoor Portraits.webp";
+import BirthdayShoots from "../../assests/gallery/Birthday Shoots.webp";
+import CoupleShoots from "../../assests/gallery/Couple Shoots.webp";
+import BabyShoots from "../../assests/gallery/Baby Shoots.webp";
+import CinematicReels from "../../assests/gallery/cinematic Reels.webp";
+import HighlightEdits from "../../assests/gallery/Highlight Edits.webp";
+import PrePostWedding from "../../assests/gallery/Pre & Post Wedding.webp";
+import EventPhotography from "../../assests/gallery/Event Photography.webp";
+import ModelShoots from "../../assests/gallery/Model Shoots.webp";
+import PhotoFrames from "../../assests/gallery/Photo Frames.webp";
+
+const WHATSAPP_NUMBER = "917075764500";
 
 const galleryItems = [
   {
     id: 1,
-    img: Image1,
+    img: OutdoorPortraits,
     category: "Outdoor Portraits",
     title: "Natural Light Stories",
     views: 450,
@@ -28,7 +34,7 @@ const galleryItems = [
   },
   {
     id: 2,
-    img: Image2,
+    img: BirthdayShoots,
     category: "Birthday Shoots",
     title: "Celebration Moments",
     views: 280,
@@ -37,7 +43,7 @@ const galleryItems = [
   },
   {
     id: 3,
-    img: Image3,
+    img: CoupleShoots,
     category: "Couple Shoots",
     title: "Love In Frames",
     views: 620,
@@ -46,7 +52,7 @@ const galleryItems = [
   },
   {
     id: 4,
-    img: Image4,
+    img: BabyShoots,
     category: "Baby Shoots",
     title: "Little Memories",
     views: 390,
@@ -55,7 +61,7 @@ const galleryItems = [
   },
   {
     id: 5,
-    img: Image5,
+    img: CinematicReels,
     category: "Cinematic Reels",
     title: "Short Visual Stories",
     views: 310,
@@ -64,7 +70,7 @@ const galleryItems = [
   },
   {
     id: 6,
-    img: Image6,
+    img: HighlightEdits,
     category: "Highlight Edits",
     title: "Memory Films",
     views: 400,
@@ -73,7 +79,7 @@ const galleryItems = [
   },
   {
     id: 7,
-    img: Image3,
+    img: PrePostWedding,
     category: "Pre & Post Wedding",
     title: "Wedding Journey",
     views: 210,
@@ -82,12 +88,30 @@ const galleryItems = [
   },
   {
     id: 8,
-    img: Image4,
+    img: EventPhotography,
     category: "Event Photography",
     title: "Live Event Coverage",
     views: 520,
     likes: 380,
     desc: "Complete event photography coverage for birthdays, gatherings, family functions, launches, and special occasions.",
+  },
+  {
+    id: 9,
+    img: ModelShoots,
+    category: "Model Shoots",
+    title: "Portfolio Frames",
+    views: 360,
+    likes: 225,
+    desc: "Fashion, editorial, and model portfolio shoots designed for confidence, styling, and professional visual identity.",
+  },
+  {
+    id: 10,
+    img: PhotoFrames,
+    category: "Photo Frames",
+    title: "Printed Memories",
+    views: 185,
+    likes: 120,
+    desc: "Premium photo frames and printed memories for homes, gifting, family walls, desks, and keepsakes.",
   },
 ];
 
@@ -108,13 +132,17 @@ export default function GalleryGrid() {
     const message = encodeURIComponent(
       `Hello BSPX Studio! I would like to know more about: ${title}`
     );
-    window.open(`https://wa.me/?text=${message}`, "_blank");
+
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,
+      "_blank"
+    );
   };
 
   const scrollingItems = [...galleryItems, ...galleryItems, ...galleryItems];
 
   return (
-    <section className="bg-white font-[family-name:Inter,sans-serif] text-stone-950 overflow-hidden">
+    <section className="overflow-hidden bg-white font-[family-name:Inter,sans-serif] text-stone-950">
       <style>{`
         @keyframes galleryAutoScroll {
           0% {
@@ -156,7 +184,7 @@ export default function GalleryGrid() {
       `}</style>
 
       {/* ================= WHITE HERO WITH AUTO SCROLL ================= */}
-      <div className="relative min-h-screen bg-white pt-10 pb-24 overflow-hidden">
+      <div className="relative min-h-screen overflow-hidden bg-white pb-24 pt-10">
         {/* Soft background glow */}
         <div className="absolute left-1/2 top-[42%] h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-[#FF7A00]/10 blur-[120px]" />
         <div className="absolute left-0 top-[35%] h-[360px] w-[360px] rounded-full bg-stone-200/70 blur-[120px]" />
@@ -165,11 +193,12 @@ export default function GalleryGrid() {
         <div className="relative mx-auto max-w-[118rem] px-4 sm:px-8 lg:px-12">
           {/* Top Label */}
           <div className="mx-auto mb-20 flex max-w-5xl items-center justify-between gap-4">
-            <div className="flex items-center gap-10 rounded-full bg-white px-6 py-4 shadow-[0_20px_70px_rgba(0,0,0,0.08)] border border-stone-100">
+            <div className="flex items-center gap-10 rounded-full border border-stone-100 bg-white px-6 py-4 shadow-[0_20px_70px_rgba(0,0,0,0.08)]">
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-950 text-white">
                   <Sparkles className="h-4 w-4 text-[#FF7A00]" />
                 </div>
+
                 <span className="text-lg font-black tracking-tight">
                   BSPX STUDIO
                 </span>
@@ -185,7 +214,7 @@ export default function GalleryGrid() {
 
             <button
               onClick={() => redirectToWhatsApp("BSPX Studio Portfolio")}
-              className="hidden rounded-full bg-stone-950 px-7 py-4 text-xs font-bold uppercase tracking-widest text-white shadow-[0_20px_60px_rgba(0,0,0,0.16)] transition hover:bg-[#FF7A00] md:flex items-center gap-3"
+              className="hidden items-center gap-3 rounded-full bg-stone-950 px-7 py-4 text-xs font-bold uppercase tracking-widest text-white shadow-[0_20px_60px_rgba(0,0,0,0.16)] transition hover:bg-[#FF7A00] md:flex"
             >
               Book Shoot
               <ArrowRight className="h-4 w-4" />
@@ -216,7 +245,7 @@ export default function GalleryGrid() {
           </div>
 
           {/* Auto Scrolling Visual Carousel */}
-          <div className="hero-perspective relative z-10 mt-20 h-[360px] md:h-[430px] overflow-hidden">
+          <div className="hero-perspective relative z-10 mt-20 h-[430px] overflow-hidden md:h-[520px]">
             <div className="pointer-events-none absolute left-0 top-0 z-30 h-full w-36 bg-gradient-to-r from-white to-transparent md:w-72" />
             <div className="pointer-events-none absolute right-0 top-0 z-30 h-full w-36 bg-gradient-to-l from-white to-transparent md:w-72" />
 
@@ -225,12 +254,12 @@ export default function GalleryGrid() {
                 <button
                   key={`${item.id}-${index}`}
                   onClick={() => openModal(item)}
-                  className="gallery-card-3d group relative h-[240px] w-[190px] shrink-0 overflow-hidden border border-stone-200 bg-stone-100 shadow-[0_30px_80px_rgba(0,0,0,0.18)] transition duration-500 hover:z-40 hover:scale-105 md:h-[300px] md:w-[235px]"
+                  className="gallery-card-3d group relative h-[300px] w-[200px] shrink-0 overflow-hidden border border-stone-200 bg-stone-100 shadow-[0_30px_80px_rgba(0,0,0,0.18)] transition duration-500 hover:z-40 hover:scale-105 sm:h-[340px] sm:w-[220px] md:h-[380px] md:w-[250px]"
                 >
                   <img
                     src={item.img}
                     alt={item.title}
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                    className="h-full w-full object-contain bg-stone-100 transition duration-700 group-hover:scale-105"
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent opacity-80" />
@@ -239,6 +268,7 @@ export default function GalleryGrid() {
                     <p className="mb-2 text-[9px] font-black uppercase tracking-[0.25em] text-[#FF7A00]">
                       {item.category}
                     </p>
+
                     <h3 className="truncate text-lg font-black text-white">
                       {item.title}
                     </h3>
@@ -254,6 +284,7 @@ export default function GalleryGrid() {
               <h3 className="text-base font-black text-stone-950">
                 Story-Led Shoots
               </h3>
+
               <p className="mx-auto mt-3 max-w-xs text-xs leading-relaxed text-stone-500">
                 Each shoot is planned around your occasion, mood, location, and
                 personal story.
@@ -264,6 +295,7 @@ export default function GalleryGrid() {
               <h3 className="text-base font-black text-stone-950">
                 Reels, Edits & Frames
               </h3>
+
               <p className="mx-auto mt-3 max-w-xs text-xs leading-relaxed text-stone-500">
                 BSPX Studio manages photography, cinematic reels, highlight
                 edits, and printed memories under one roof.
@@ -274,6 +306,7 @@ export default function GalleryGrid() {
               <h3 className="text-base font-black text-stone-950">
                 Across India
               </h3>
+
               <p className="mx-auto mt-3 max-w-xs text-xs leading-relaxed text-stone-500">
                 Born in Coimbatore, serving clients across Chennai, Bangalore,
                 Kerala, Delhi, Goa, and beyond.
@@ -312,12 +345,12 @@ export default function GalleryGrid() {
             </button>
           </header>
 
-          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
             {galleryItems.map((member) => (
               <div
                 key={member.id}
                 onClick={() => openModal(member)}
-                className={`group relative aspect-[4/5] cursor-pointer overflow-hidden border bg-stone-100 transition-all duration-500 hover:shadow-2xl ${
+                className={`group relative h-[420px] cursor-pointer overflow-hidden border bg-stone-100 transition-all duration-500 hover:shadow-2xl sm:h-[460px] md:h-[500px] ${
                   activeId === member.id
                     ? "border-[#FF7A00] ring-4 ring-[#FF7A00]/10"
                     : "border-stone-200 hover:border-stone-400"
@@ -326,7 +359,7 @@ export default function GalleryGrid() {
                 <img
                   src={member.img}
                   alt={member.title}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="h-full w-full object-contain bg-stone-100 transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
                 <div
@@ -372,11 +405,11 @@ export default function GalleryGrid() {
             className="relative grid max-h-[90vh] w-full max-w-5xl overflow-hidden bg-white shadow-2xl transition-all duration-500 md:grid-cols-2"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative min-h-[360px] bg-stone-200">
+            <div className="relative min-h-[420px] bg-stone-100 md:min-h-[560px]">
               <img
                 src={selectedMember.img}
                 alt={selectedMember.title}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain bg-stone-100"
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -428,6 +461,7 @@ export default function GalleryGrid() {
 
             <button
               onClick={closeModal}
+              aria-label="Close modal"
               className="absolute right-5 top-5 bg-white p-3 text-stone-950 shadow-lg transition hover:bg-stone-100"
             >
               <X className="h-4 w-4" />

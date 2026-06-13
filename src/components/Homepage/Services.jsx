@@ -1,76 +1,95 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 
+// Correct local images from assets/gallery
+import BabyShoots from "../../assests/gallery/Baby Shoots.webp";
+import BirthdayShoots from "../../assests/gallery/Birthday Shoots.webp";
+import CinematicReels from "../../assests/gallery/cinematic Reels.webp";
+import CoupleShoots from "../../assests/gallery/Couple Shoots.webp";
+import EventPhotography from "../../assests/gallery/Event Photography.webp";
+import HighlightEdits from "../../assests/gallery/Highlight Edits.webp";
+import ModelShoots from "../../assests/gallery/Model Shoots.webp";
+import OutdoorPortraits from "../../assests/gallery/Outdoor Portraits.webp";
+import PhotoFrames from "../../assests/gallery/Photo Frames.webp";
+import PrePostWedding from "../../assests/gallery/Pre & Post Wedding.webp";
+
+const WHATSAPP_NUMBER = "917075764500";
+
+const getWhatsappLink = (serviceTitle = "Photography Shoot") =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    `Hi, I am interested in booking ${serviceTitle}. Please share the details.`
+  )}`;
+
 const services = [
   {
     id: "01",
     title: "Outdoor Portraits",
     subtitle: "Natural light. Real backgrounds.",
     desc: "Portraits that capture personality, mood, and location in one cinematic frame.",
-    img: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: OutdoorPortraits,
   },
   {
     id: "02",
     title: "Birthday Shoots",
     subtitle: "Fun. Colorful. Candid.",
     desc: "Celebrate milestones with vibrant frames that feel alive and personal.",
-    img: "https://images.pexels.com/photos/1706694/pexels-photo-1706694.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: BirthdayShoots,
   },
   {
     id: "03",
     title: "Couple Shoots",
     subtitle: "Romantic creative sessions.",
     desc: "Soft, emotional visuals designed around chemistry, story, and location.",
-    img: "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: CoupleShoots,
   },
   {
     id: "04",
     title: "Baby Shoots",
     subtitle: "Cute expressions. Calm moments.",
     desc: "Patient, warm, and detail-led photography for your little one’s early memories.",
-    img: "https://images.pexels.com/photos/1648377/pexels-photo-1648377.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: BabyShoots,
   },
   {
     id: "05",
     title: "Cinematic Reels",
     subtitle: "Short videos. Strong stories.",
     desc: "Professional vertical reels made for Instagram, memories, and brand storytelling.",
-    img: "https://images.pexels.com/photos/196652/pexels-photo-196652.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: CinematicReels,
   },
   {
     id: "06",
     title: "Highlight Edits",
     subtitle: "Raw clips to story-driven edits.",
     desc: "We turn moments into emotional highlight films with pacing, music, and rhythm.",
-    img: "https://images.pexels.com/photos/3379934/pexels-photo-3379934.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: HighlightEdits,
   },
   {
     id: "07",
     title: "Photo Frames",
     subtitle: "Premium printed memories.",
     desc: "High-quality physical prints and frames for homes, gifting, and keepsakes.",
-    img: "https://images.pexels.com/photos/2249063/pexels-photo-2249063.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: PhotoFrames,
   },
   {
     id: "08",
     title: "Pre & Post Wedding",
     subtitle: "Emotional relaxed shoots.",
     desc: "Premium couple storytelling before and after the wedding with cinematic direction.",
-    img: "https://images.pexels.com/photos/2253833/pexels-photo-2253833.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: PrePostWedding,
   },
   {
     id: "09",
     title: "Model Shoots",
     subtitle: "Fashion and editorial looks.",
     desc: "Portfolio-ready frames built around styling, confidence, and visual identity.",
-    img: "https://images.pexels.com/photos/157675/fashion-model-model-female-157675.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: ModelShoots,
   },
   {
     id: "10",
     title: "Event Photography",
     subtitle: "Birthdays. Gatherings. Moments.",
     desc: "Full event coverage that captures emotion, people, energy, and atmosphere.",
-    img: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=900",
+    img: EventPhotography,
   },
 ];
 
@@ -152,8 +171,13 @@ export default function Services() {
                   </p>
                 </div>
 
-                {/* Bottom CTA */}
-                <button className="flex h-12 w-full items-center justify-between border border-white/20 bg-white/15 px-4 text-white backdrop-blur-xl transition-all duration-300 hover:bg-white hover:text-stone-950">
+                {/* WhatsApp CTA */}
+                <a
+                  href={getWhatsappLink(service.title)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-12 w-full items-center justify-between border border-white/20 bg-white/15 px-4 text-white backdrop-blur-xl transition-all duration-300 hover:bg-white hover:text-stone-950"
+                >
                   <span className="flex h-8 w-8 items-center justify-center bg-white/20">
                     <ArrowRight size={16} />
                   </span>
@@ -165,7 +189,7 @@ export default function Services() {
                   <span className="text-white/40 group-hover:text-stone-400">
                     »»
                   </span>
-                </button>
+                </a>
               </div>
             </article>
           ))}
@@ -188,9 +212,14 @@ export default function Services() {
             </p>
           </div>
 
-          <button className="w-full bg-[#FF7A00] px-8 py-4 text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-stone-950 sm:w-auto sm:px-10">
+          <a
+            href={getWhatsappLink("a professional photography shoot")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full bg-[#FF7A00] px-8 py-4 text-center text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-stone-950 sm:w-auto sm:px-10"
+          >
             Book Your Shoot Today
-          </button>
+          </a>
         </div>
       </div>
     </section>
