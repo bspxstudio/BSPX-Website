@@ -96,23 +96,24 @@ export default function Hero() {
 
   const activeSlide = slides[current];
 
+  // Upgraded the slide cards to have rounded-2xl for a modern look
   const getPositionClass = (index) => {
     const total = slides.length;
     const diff = (index - current + total) % total;
 
     if (diff === 0) {
-      return "z-40 translate-x-0 translate-y-0 scale-100 rotate-0 opacity-100 shadow-[0_20px_70px_rgba(212,165,58,0.25)] border-[#D4A53A]/50";
+      return "z-40 translate-x-0 translate-y-0 scale-100 rotate-0 opacity-100 shadow-[0_20px_60px_rgba(0,0,0,0.8)] border-white/20 rounded-2xl";
     }
 
     if (diff === 1) {
-      return "z-30 translate-x-[180px] translate-y-[40px] xl:translate-x-[250px] xl:translate-y-[60px] 2xl:translate-x-[300px] scale-[0.85] rotate-[8deg] opacity-60 blur-[1px] border-white/10";
+      return "z-30 translate-x-[180px] translate-y-[40px] xl:translate-x-[250px] xl:translate-y-[60px] 2xl:translate-x-[300px] scale-[0.85] rotate-[8deg] opacity-60 blur-[1px] border-white/5 rounded-2xl";
     }
 
     if (diff === total - 1) {
-      return "z-30 -translate-x-[180px] -translate-y-[40px] xl:-translate-x-[250px] xl:-translate-y-[60px] 2xl:-translate-x-[300px] scale-[0.85] -rotate-[8deg] opacity-60 blur-[1px] border-white/10";
+      return "z-30 -translate-x-[180px] -translate-y-[40px] xl:-translate-x-[250px] xl:-translate-y-[60px] 2xl:-translate-x-[300px] scale-[0.85] -rotate-[8deg] opacity-60 blur-[1px] border-white/5 rounded-2xl";
     }
 
-    return "z-10 translate-x-0 translate-y-[120px] scale-[0.6] opacity-0 border-white/5";
+    return "z-10 translate-x-0 translate-y-[120px] scale-[0.6] opacity-0 border-white/5 rounded-2xl";
   };
 
   return (
@@ -129,92 +130,92 @@ export default function Hero() {
                   : "scale-110 opacity-0"
               }`}
             >
-              {/* Changed: Removed grayscale on mobile so it serves as a vibrant background, kept it on desktop (lg:grayscale) */}
               <img
                 src={slide.img}
                 alt={slide.shortTitle}
                 className="h-full w-full object-cover lg:grayscale"
               />
 
-              {/* Changed: Lightened the black overlay on mobile so the image is clearly visible */}
-              <div className="absolute inset-0 bg-black/40 lg:bg-black/80" />
-              
-              {/* Changed: Hid the heavy horizontal gradient on mobile, keep only for desktop layout */}
-              <div className="absolute inset-0 hidden bg-gradient-to-r from-[#050505] via-[#050505]/75 to-[#050505]/90 lg:block" />
-              
-              {/* Bottom gradient to ensure text readability */}
+              <div className="absolute inset-0 bg-black/40 lg:bg-black/70" />
+              <div className="absolute inset-0 hidden bg-gradient-to-r from-[#050505] via-[#050505]/75 to-transparent lg:block" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/80" />
             </div>
           ))}
 
-          <div className="absolute left-[-40%] top-[8%] h-[300px] w-[300px] bg-[#D4A53A]/15 blur-[100px] sm:left-[-20%] sm:h-[420px] sm:w-[420px] md:h-[520px] md:w-[520px] md:blur-[150px]" />
+          <div className="absolute left-[-40%] top-[8%] h-[300px] w-[300px] bg-[#D4A53A]/20 blur-[100px] sm:left-[-20%] sm:h-[420px] sm:w-[420px] md:h-[520px] md:w-[520px] md:blur-[150px]" />
 
           <div className="absolute right-[-45%] bottom-[5%] h-[340px] w-[340px] bg-[#1E3A5F]/30 blur-[110px] sm:right-[-25%] sm:h-[500px] sm:w-[500px] md:h-[620px] md:w-[620px] md:blur-[160px]" />
 
-          <h2 className="absolute left-1/2 top-[7%] -translate-x-1/2 select-none font-['Bebas_Neue',sans-serif] text-[4.2rem] leading-none tracking-[0.08em] text-white/[0.025] min-[380px]:text-[5.5rem] sm:text-[8rem] md:top-[10%] md:text-[13rem] lg:text-[18rem] xl:text-[23rem] 2xl:text-[25rem]">
+          {/* Changed Bebas to Helvetica for the giant background watermark */}
+          <h2 className="absolute left-1/2 top-[7%] -translate-x-1/2 select-none font-['Helvetica',Arial,sans-serif] font-bold text-[4.2rem] leading-none tracking-[0.05em] text-white/[0.025] min-[380px]:text-[5.5rem] sm:text-[8rem] md:top-[10%] md:text-[13rem] lg:text-[18rem] xl:text-[20rem] 2xl:text-[23rem]">
             STUDIO
           </h2>
         </div>
 
         {/* ================= MAIN HERO CONTENT ================= */}
         <div className="relative z-30 mx-auto grid min-h-[100svh] w-full max-w-[1900px] grid-cols-1 items-center gap-8 px-4 pb-52 pt-10 min-[380px]:pb-48 min-[380px]:pt-14 sm:min-h-[820px] sm:px-6 sm:pb-48 md:min-h-[860px] md:px-10 md:pt-20 lg:min-h-[820px] lg:grid-cols-[0.9fr_1.1fr] lg:px-12 lg:pb-40 xl:min-h-[900px] xl:grid-cols-[0.8fr_1.2fr] xl:px-16">
+          
           {/* ================= LEFT CONTENT CARD ================= */}
-          {/* Changed: Increased max-w on lg and xl screens to give the heading more horizontal width */}
-          <div className="w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl border border-white/10 bg-black/45 p-4 backdrop-blur-2xl min-[380px]:p-5 sm:p-7 md:p-9 lg:p-10">
-            <div className="mb-4 inline-flex max-w-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur-xl md:mb-7 md:px-5">
-              <span className="font-['Montserrat',sans-serif] text-[8px] font-semibold uppercase tracking-[0.18em] text-[#D4A53A] min-[380px]:text-[9px] min-[380px]:tracking-[0.24em] sm:text-[10px] sm:tracking-[0.32em]">
+          {/* Transformed sharp box into a premium rounded glass panel */}
+          <div className="w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl rounded-3xl border border-white/10 bg-white/[0.02] p-6 shadow-2xl backdrop-blur-2xl min-[380px]:p-8 sm:p-10 md:p-12 lg:p-14">
+            
+            <div className="mb-6 inline-flex max-w-full items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-xl md:mb-8 md:px-5">
+              <span className="font-['Poppins',sans-serif] text-[9px] font-semibold uppercase tracking-[0.2em] text-[#D4A53A] sm:text-[10px]">
                 {activeSlide.tag}
               </span>
             </div>
 
-            <h1 className="w-full whitespace-pre-line font-['Bebas_Neue',sans-serif] text-[2.8rem] font-normal uppercase leading-[0.88] tracking-wide text-white min-[380px]:text-[3.4rem] sm:text-[4.7rem] md:text-[6rem] lg:text-[5.8rem] xl:text-8xl">
+            {/* Changed Bebas to strict bold Helvetica, adjusted sizing for wider font characters */}
+            <h1 className="w-full whitespace-pre-line font-['Helvetica',Arial,sans-serif] text-[2.2rem] font-bold uppercase leading-[1.05] tracking-tight text-white min-[380px]:text-[2.6rem] sm:text-[4rem] md:text-[5rem] lg:text-[4.5rem] xl:text-[5.5rem]">
               {activeSlide.title}
             </h1>
 
-            <p className="mt-4 text-xs font-medium leading-relaxed text-white/65 min-[380px]:text-sm sm:max-w-xl md:mt-7 md:text-base">
+            <p className="mt-5 font-['Poppins',sans-serif] text-sm font-light leading-relaxed text-white/70 min-[380px]:text-[15px] sm:max-w-xl md:mt-8 md:text-base md:leading-loose">
               {activeSlide.desc}
             </p>
 
-            <div className="mt-5 grid grid-cols-1 gap-px bg-white/10 sm:grid-cols-2 md:mt-8">
-              <div className="bg-black/40 p-3 min-[380px]:p-4 sm:p-5">
-                <p className="font-['Montserrat',sans-serif] text-[8px] font-semibold uppercase tracking-[0.18em] text-white/35 min-[380px]:text-[9px] min-[380px]:tracking-[0.22em]">
+            {/* Transformed sharp matrix grid into sleek vertical/horizontal flex layout */}
+            <div className="mt-8 flex flex-col gap-5 rounded-2xl bg-white/5 p-5 border border-white/5 sm:flex-row sm:items-center sm:gap-12 md:mt-10 md:p-6">
+              <div>
+                <p className="font-['Poppins',sans-serif] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D4A53A]">
                   Location
                 </p>
-
-                <p className="mt-2 flex items-start gap-2 text-[11px] font-semibold leading-relaxed text-white/75 min-[380px]:text-xs sm:text-sm">
-                  <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#D4A53A] min-[380px]:h-4 min-[380px]:w-4" />
+                <p className="mt-2 flex items-center gap-2 font-['Poppins',sans-serif] text-[13px] font-medium text-white sm:text-sm">
+                  <MapPin className="h-4 w-4 shrink-0 text-[#D4A53A]" />
                   {activeSlide.location}
                 </p>
               </div>
 
-              <div className="bg-black/40 p-3 min-[380px]:p-4 sm:p-5">
-                <p className="font-['Montserrat',sans-serif] text-[8px] font-semibold uppercase tracking-[0.18em] text-white/35 min-[380px]:text-[9px] min-[380px]:tracking-[0.22em]">
+              <div className="hidden h-10 w-px bg-white/10 sm:block" />
+
+              <div>
+                <p className="font-['Poppins',sans-serif] text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D4A53A]">
                   Best For
                 </p>
-
-                <p className="mt-2 text-[11px] font-semibold leading-relaxed text-white/75 min-[380px]:text-xs sm:text-sm">
+                <p className="mt-2 font-['Poppins',sans-serif] text-[13px] font-medium text-white sm:text-sm">
                   {activeSlide.people}
                 </p>
               </div>
             </div>
 
-            <div className="mt-5 flex items-start gap-3 text-[11px] font-semibold leading-relaxed text-white/55 min-[380px]:text-xs">
-              <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#D4A53A] min-[380px]:h-4 min-[380px]:w-4" />
-              <span>+918531985733 · Coimbatore · Across India</span>
+            <div className="mt-6 flex items-center gap-3 font-['Poppins',sans-serif] text-[12px] font-medium text-white/60 md:mt-8">
+              <Phone className="h-4 w-4 shrink-0 text-[#D4A53A]" />
+              <span>+91 8531985733 · Coimbatore · Across India</span>
             </div>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-9 md:gap-4">
+            {/* Completely redesigned luxury buttons (rounded-full, Helvetica, sleek hover effects) */}
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center md:gap-5">
               <button
                 onClick={() => redirectToWhatsApp(activeSlide.shortTitle)}
-                className="group inline-flex w-full items-center justify-center gap-3 bg-[#D4A53A] px-5 py-3.5 font-['Montserrat',sans-serif] text-[10px] font-semibold uppercase tracking-[0.14em] text-[#0A0A0A] transition hover:bg-[#FF7A00] hover:text-white min-[380px]:px-6 min-[380px]:py-4 min-[380px]:text-[11px] min-[380px]:tracking-[0.18em] sm:w-auto sm:px-8 sm:text-xs sm:tracking-[0.22em]"
+                className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 font-['Helvetica',Arial,sans-serif] text-[11px] font-bold uppercase tracking-[0.15em] text-black shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#D4A53A] hover:text-white hover:shadow-[0_8px_25px_rgba(212,165,58,0.4)] sm:w-auto"
               >
                 Book Your Shoot
-                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
 
               <button
                 onClick={scrollToPortfolio}
-                className="w-full border border-white/15 bg-white/10 px-5 py-3.5 font-['Montserrat',sans-serif] text-[10px] font-semibold uppercase tracking-[0.14em] text-white backdrop-blur-xl transition hover:bg-white hover:text-black min-[380px]:px-6 min-[380px]:py-4 min-[380px]:text-[11px] min-[380px]:tracking-[0.18em] sm:w-auto sm:px-8 sm:text-xs sm:tracking-[0.22em]"
+                className="w-full rounded-full border border-white/20 bg-transparent px-8 py-4 font-['Helvetica',Arial,sans-serif] text-[11px] font-bold uppercase tracking-[0.15em] text-white backdrop-blur-md transition-all duration-300 hover:border-white hover:bg-white hover:text-black sm:w-auto"
               >
                 View Portfolio
               </button>
@@ -223,16 +224,16 @@ export default function Hero() {
 
           {/* ================= DESKTOP SHOWCASE SLIDESHOW ================= */}
           <div className="relative hidden min-h-[560px] items-center justify-center lg:flex xl:min-h-[680px]">
-            <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[40px] border border-white/5 bg-gradient-to-tr from-white/5 to-transparent xl:h-[560px] xl:w-[560px] 2xl:h-[620px] 2xl:w-[620px] transition-transform duration-1000" />
+            <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[40px] border border-white/5 bg-gradient-to-tr from-white/5 to-transparent transition-transform duration-1000 xl:h-[560px] xl:w-[560px] 2xl:h-[620px] 2xl:w-[620px]" />
 
-            <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[30px] border border-[#D4A53A]/20 bg-gradient-to-bl from-[#D4A53A]/5 to-transparent xl:h-[430px] xl:w-[430px] 2xl:h-[460px] 2xl:w-[460px] transition-transform duration-1000" />
+            <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rotate-12 rounded-[30px] border border-[#D4A53A]/20 bg-gradient-to-bl from-[#D4A53A]/5 to-transparent transition-transform duration-1000 xl:h-[430px] xl:w-[430px] 2xl:h-[460px] 2xl:w-[460px]" />
 
             <div className="relative h-[520px] w-[520px] xl:h-[620px] xl:w-[680px] 2xl:w-[780px]">
               {slides.map((slide, index) => (
                 <button
                   key={slide.id}
                   onClick={() => setCurrent(index)}
-                  className={`absolute left-1/2 top-1/2 h-[460px] w-[290px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border bg-black shadow-[0_40px_120px_rgba(0,0,0,0.75)] transition-all duration-[900ms] ease-[cubic-bezier(0.25,1,0.5,1)] xl:h-[520px] xl:w-[330px] 2xl:h-[560px] 2xl:w-[360px] ${getPositionClass(
+                  className={`absolute left-1/2 top-1/2 h-[460px] w-[290px] -translate-x-1/2 -translate-y-1/2 overflow-hidden border bg-black transition-all duration-[900ms] ease-[cubic-bezier(0.25,1,0.5,1)] xl:h-[520px] xl:w-[330px] 2xl:h-[560px] 2xl:w-[360px] ${getPositionClass(
                     index
                   )}`}
                 >
@@ -245,21 +246,21 @@ export default function Hero() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent" />
 
                   <div className="absolute left-5 right-5 top-5 flex items-center justify-between xl:left-6 xl:right-6 xl:top-6">
-                    <span className="border border-white/20 bg-white/10 px-3 py-1.5 font-['Montserrat',sans-serif] text-[7px] font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-xl xl:text-[8px] xl:tracking-[0.2em]">
+                    <span className="rounded-full border border-white/20 bg-black/40 px-4 py-1.5 font-['Poppins',sans-serif] text-[7px] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-xl xl:text-[8px]">
                       {slide.tag}
                     </span>
 
-                    <span className="font-['Montserrat',sans-serif] text-[10px] font-semibold text-white/60">
+                    <span className="font-['Helvetica',Arial,sans-serif] text-[11px] font-bold text-white/80">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                   </div>
 
-                  <div className="absolute bottom-5 left-5 right-5 text-left xl:bottom-6 xl:left-6 xl:right-6">
-                    <h3 className="font-['Bebas_Neue',sans-serif] text-4xl font-normal leading-none tracking-wide text-white xl:text-5xl">
+                  <div className="absolute bottom-6 left-6 right-6 text-left xl:bottom-8 xl:left-8 xl:right-8">
+                    <h3 className="font-['Helvetica',Arial,sans-serif] text-3xl font-bold uppercase leading-tight tracking-tight text-white xl:text-4xl">
                       {slide.shortTitle}
                     </h3>
 
-                    <p className="mt-3 line-clamp-2 text-xs leading-relaxed text-white/60">
+                    <p className="mt-3 line-clamp-2 font-['Poppins',sans-serif] text-xs font-light leading-relaxed text-white/80">
                       {slide.desc}
                     </p>
                   </div>
@@ -270,40 +271,40 @@ export default function Hero() {
         </div>
 
         {/* ================= BOTTOM CONTROLS ================= */}
-        <div className="absolute bottom-3 left-3 right-3 z-40 sm:bottom-6 sm:left-6 sm:right-6 md:left-10 md:right-10 lg:bottom-8 lg:left-12 lg:right-12">
-          <div className="mx-auto flex max-w-[1900px] flex-col gap-3 border border-white/10 bg-black/45 p-2.5 backdrop-blur-2xl sm:gap-4 sm:p-4 md:flex-row md:items-center md:justify-between">
+        <div className="absolute bottom-4 left-4 right-4 z-40 sm:bottom-6 sm:left-6 sm:right-6 md:left-10 md:right-10 lg:bottom-8 lg:left-12 lg:right-12">
+          <div className="mx-auto flex max-w-[1900px] flex-col gap-3 rounded-[2rem] border border-white/10 bg-black/50 p-3 backdrop-blur-2xl sm:gap-4 sm:p-4 md:flex-row md:items-center md:justify-between lg:px-6">
             <div className="flex items-center justify-between gap-3 md:justify-start">
               <div className="flex items-center gap-2 sm:gap-3">
                 <button
                   onClick={prevSlide}
                   aria-label="Previous slide"
-                  className="flex h-9 w-9 items-center justify-center border border-white/10 bg-white/10 text-white transition hover:bg-[#D4A53A] hover:text-[#0A0A0A] min-[380px]:h-10 min-[380px]:w-10 sm:h-12 sm:w-12"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-transparent text-white transition-colors hover:border-[#D4A53A] hover:bg-[#D4A53A] hover:text-[#0A0A0A] sm:h-12 sm:w-12"
                 >
-                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeft className="h-5 w-5" />
                 </button>
 
                 <button
                   onClick={nextSlide}
                   aria-label="Next slide"
-                  className="flex h-9 w-9 items-center justify-center bg-[#D4A53A] text-[#0A0A0A] transition hover:bg-[#FF7A00] hover:text-white min-[380px]:h-10 min-[380px]:w-10 sm:h-12 sm:w-12"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D4A53A] text-[#0A0A0A] transition-colors hover:bg-white sm:h-12 sm:w-12"
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-5 w-5" />
                 </button>
               </div>
 
-              <div className="font-['Montserrat',sans-serif] text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45 min-[380px]:text-xs min-[380px]:tracking-[0.2em] md:ml-3">
-                {String(current + 1).padStart(2, "0")} /{" "}
+              <div className="font-['Helvetica',Arial,sans-serif] text-[11px] font-bold uppercase tracking-[0.2em] text-white/50 md:ml-4">
+                <span className="text-white">{String(current + 1).padStart(2, "0")}</span> /{" "}
                 {String(slides.length).padStart(2, "0")}
               </div>
             </div>
 
-            <div className="grid flex-1 grid-cols-4 gap-1.5 min-[380px]:gap-2 sm:gap-3 md:max-w-3xl xl:max-w-5xl">
+            <div className="grid flex-1 grid-cols-4 gap-2 sm:gap-3 md:max-w-3xl xl:max-w-5xl">
               {slides.map((slide, index) => (
                 <button
                   key={slide.id}
                   onClick={() => setCurrent(index)}
                   aria-label={`Open ${slide.shortTitle}`}
-                  className={`group relative h-12 overflow-hidden border transition-all duration-500 min-[380px]:h-14 sm:h-16 md:h-20 lg:h-24 ${
+                  className={`group relative h-14 overflow-hidden rounded-xl border transition-all duration-500 sm:h-16 md:h-16 lg:h-20 ${
                     current === index
                       ? "border-[#D4A53A]"
                       : "border-white/10 hover:border-white/40"
@@ -315,7 +316,7 @@ export default function Hero() {
                     className="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-110 group-hover:grayscale-0"
                   />
 
-                  <div className="absolute inset-0 bg-black/35" />
+                  <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/20" />
 
                   <div
                     className={`absolute bottom-0 left-0 h-1 bg-[#D4A53A] transition-all duration-500 ${
@@ -323,8 +324,8 @@ export default function Hero() {
                     }`}
                   />
 
-                  <div className="absolute bottom-2 left-2 right-2 hidden text-left sm:block">
-                    <p className="truncate font-['Montserrat',sans-serif] text-[7px] font-semibold uppercase tracking-[0.14em] text-white/70 md:text-[8px] md:tracking-[0.18em]">
+                  <div className="absolute bottom-2 left-3 right-3 hidden text-left sm:block">
+                    <p className={`truncate font-['Helvetica',Arial,sans-serif] text-[8px] font-bold uppercase tracking-[0.1em] transition-colors ${current === index ? 'text-white' : 'text-white/60 group-hover:text-white'}`}>
                       {slide.shortTitle}
                     </p>
                   </div>
