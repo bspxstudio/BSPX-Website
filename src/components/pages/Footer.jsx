@@ -39,7 +39,7 @@ export default function Footer() {
     {
       name: "Instagram",
       icon: Instagram,
-      href: "https://www.instagram.com/bspx_studio/",
+      href: "https://www.instagram.com/bspx_studio/?hl=en",
     },
     {
       name: "Facebook",

@@ -102,9 +102,9 @@ const SEO = ({
       responseTime: 'PT24H',
     },
     sameAs: [
-      'https://www.instagram.com/bspxstudio',
-      'https://www.facebook.com/bspxstudio',
-      'https://www.youtube.com/@bspxstudio',
+      'https://www.instagram.com/bspx_studio/?hl=en',
+      'https://www.facebook.com/profile.php?id=61590660396444',
+      'https://www.youtube.com/',
     ],
     foundingDate: '2024',
     priceRange: '₹₹',
