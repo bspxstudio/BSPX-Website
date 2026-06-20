@@ -2,57 +2,75 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0c0a09" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- ============================================================ -->
-    <!-- PRIMARY SEO META TAGS                                          -->
+    <!-- FAVICON & APP ICONS                                           -->
     <!-- ============================================================ -->
-    <title>BSPX Studio | Photography & Video – Coimbatore | Serving All India</title>
-    <meta
-      name="title"
-      content="BSPX Studio | Photography & Video – Coimbatore | Serving All India"
-    />
-    <meta
-      name="description"
-      content="BSPX Studio – professional photography & video services based in Coimbatore, serving all India. Outdoor portraits, birthday shoots, couple shoots, baby shoots, pre/post wedding shoots, model shoots, events, reels, highlight edits & photo frames."
-    />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    
+    <!-- ============================================================ -->
+    <!-- DNS PREFETCH (Performance)                                    -->
+    <!-- ============================================================ -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- ============================================================ -->
+    <!-- PRIMARY SEO META TAGS                                         -->
+    <!-- ============================================================ -->
+    <title>BSPX Studio | Premium Photography & Cinematic Reels in Coimbatore | Serving All India</title>
+    <meta name="title" content="BSPX Studio | Premium Photography & Cinematic Reels in Coimbatore | Serving All India" />
+    <meta name="description" content="BSPX Studio – professional photography & cinematic reels based in Coimbatore, serving all India. Book outdoor portraits, birthday shoots, couple shoots, baby shoots, pre/post wedding, events & more. Rated 4.9 stars." />
+    <meta name="keywords" content="photography, cinematic reels, videography, Coimbatore photographer, wedding photography, portrait photography, birthday shoots, couple shoots, baby shoots, event photography, pre-wedding shoots, post-wedding shoots, model shoots, photo frames, highlight edits, BSPX Studio" />
+    <meta name="author" content="BSPX Studio" />
+    <meta name="copyright" content="© 2026 BSPX Studio. All rights reserved." />
     <link rel="canonical" href="https://www.bspxstudio.com/" />
+
+    <!-- ============================================================ -->
+    <!-- ROBOTS & CRAWLING                                             -->
+    <!-- ============================================================ -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="referrer" content="origin" />
+    <meta name="format-detection" content="telephone=yes" />
 
     <!-- ============================================================ -->
     <!-- OPEN GRAPH / FACEBOOK                                         -->
     <!-- ============================================================ -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.bspxstudio.com/" />
-    <meta
-      property="og:title"
-      content="BSPX Studio | Photography & Video – Coimbatore | Serving All India"
-    />
-    <meta
-      property="og:description"
-      content="BSPX Studio captures your special moments – outdoor portraits, birthday shoots, couple shoots, baby shoots, pre/post wedding, model shoots, events, reels, highlight edits & photo frames. Based in Coimbatore, we travel across India."
-    />
+    <meta property="og:title" content="BSPX Studio | Premium Photography & Cinematic Reels in Coimbatore" />
+    <meta property="og:description" content="BSPX Studio captures your special moments – outdoor portraits, birthday shoots, couple shoots, baby shoots, pre/post wedding, model shoots, events, reels, highlight edits & photo frames. Based in Coimbatore, we travel across India." />
     <meta property="og:image" content="https://www.bspxstudio.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="BSPX Studio - Professional Photography & Cinematic Reels in Coimbatore" />
     <meta property="og:locale" content="en_IN" />
     <meta property="og:site_name" content="BSPX Studio" />
+    <meta property="og:email" content="bspxstudio@gmail.com" />
+    <meta property="og:phone_number" content="+918531985733" />
 
     <!-- ============================================================ -->
     <!-- TWITTER / X                                                   -->
     <!-- ============================================================ -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.bspxstudio.com/" />
-    <meta
-      name="twitter:title"
-      content="BSPX Studio | Photography & Video – Coimbatore | Serving All India"
-    />
-    <meta
-      name="twitter:description"
-      content="BSPX Studio – professional photography & video. Outdoor portraits, birthday shoots, couple shoots, baby shoots, pre/post wedding, model shoots, events, reels, highlight edits & photo frames. Based in Coimbatore. Serving all India."
-    />
+    <meta name="twitter:title" content="BSPX Studio | Premium Photography & Cinematic Reels in Coimbatore" />
+    <meta name="twitter:description" content="BSPX Studio – professional photography & cinematic reels. Outdoor portraits, birthday shoots, couple shoots, baby shoots, pre/post wedding, model shoots, events, reels, highlight edits & photo frames. Based in Coimbatore. Serving all India." />
     <meta name="twitter:image" content="https://www.bspxstudio.com/og-image.png" />
+    <meta name="twitter:image:alt" content="BSPX Studio - Professional Photography & Cinematic Reels" />
+    <meta name="twitter:site" content="@bspxstudio" />
+    <meta name="twitter:creator" content="@bspxstudio" />
 
     <!-- ============================================================ -->
     <!-- GEO TAGS (Location Targeting)                                 -->
@@ -62,19 +80,7 @@
     <meta name="geo.position" content="11.0168;76.9558" />
     <meta name="ICBM" content="11.0168, 76.9558" />
     <meta name="location" content="lat=11.0168;long=76.9558" />
-
-    <!-- ============================================================ -->
-    <!-- ADDITIONAL SEO & VERIFICATION                                 -->
-    <!-- ============================================================ -->
-    <meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="referrer" content="origin" />
-    <meta name="author" content="BSPX Studio" />
-    <meta name="copyright" content="© 2026 BSPX Studio. All rights reserved." />
-
-    <!-- Favicon & App Icons -->
-    <link rel="apple-touch-icon" href="https://www.bspxstudio.com/logo192.png" />
-    <link rel="manifest" href="https://www.bspxstudio.com/manifest.json" />
+    <meta name="coverage" content="India" />
 
     <!-- ============================================================ -->
     <!-- SCHEMA MARKUP: ORGANIZATION                                   -->
@@ -93,23 +99,37 @@
         "telephone": "+918531985733",
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "Near Gandhipuram",
           "addressLocality": "Coimbatore",
           "addressRegion": "Tamil Nadu",
-          "addressCountry": "India",
-          "postalCode": "641001"
+          "postalCode": "641001",
+          "addressCountry": "India"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "11.0168",
+          "longitude": "76.9558"
         },
         "areaServed": {
           "@type": "Country",
           "name": "India"
         },
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "email": "bspxstudio@gmail.com",
-          "telephone": "+918531985733",
-          "contactType": "Customer Service",
-          "availableLanguage": ["English", "Tamil"],
-          "responseTime": "PT24H"
-        },
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "email": "bspxstudio@gmail.com",
+            "telephone": "+918531985733",
+            "contactType": "Customer Service",
+            "availableLanguage": ["English", "Tamil"],
+            "responseTime": "PT24H"
+          },
+          {
+            "@type": "ContactPoint",
+            "telephone": "+918531985733",
+            "contactType": "Sales",
+            "availableLanguage": ["English", "Tamil"]
+          }
+        ],
         "sameAs": [
           "https://www.instagram.com/bspxstudio",
           "https://www.facebook.com/bspxstudio",
@@ -129,7 +149,7 @@
     </script>
 
     <!-- ============================================================ -->
-    <!-- SCHEMA MARKUP: LOCAL BUSINESS (with Geo coordinates)          -->
+    <!-- SCHEMA MARKUP: LOCAL BUSINESS                                 -->
     <!-- ============================================================ -->
     <script type="application/ld+json">
       {
@@ -155,88 +175,30 @@
           "longitude": "76.9558"
         },
         "areaServed": [
-          {
-            "@type": "City",
-            "name": "Coimbatore"
-          },
-          {
-            "@type": "City",
-            "name": "Chennai"
-          },
-          {
-            "@type": "City",
-            "name": "Bangalore"
-          },
-          {
-            "@type": "City",
-            "name": "Hyderabad"
-          },
-          {
-            "@type": "City",
-            "name": "Mumbai"
-          },
-          {
-            "@type": "City",
-            "name": "Delhi"
-          },
-          {
-            "@type": "City",
-            "name": "Kerala"
-          },
-          {
-            "@type": "City",
-            "name": "Goa"
-          }
+          "Coimbatore",
+          "Chennai",
+          "Bangalore",
+          "Hyderabad",
+          "Mumbai",
+          "Delhi",
+          "Kerala",
+          "Goa",
+          "Ooty",
+          "Kodaikanal",
+          "Pondicherry",
+          "Madurai"
         ],
         "knowsLanguage": ["English", "Tamil"],
-        "priceRange": "₹₹"
+        "priceRange": "₹₹",
+        "paymentAccepted": ["Cash", "Credit Card", "Debit Card", "UPI", "Bank Transfer"],
+        "currenciesAccepted": "INR",
+        "hasMap": "https://maps.google.com/?q=Coimbatore",
+        "openingHours": "Mo-Su 09:00-20:00"
       }
     </script>
 
     <!-- ============================================================ -->
-    <!-- SCHEMA MARKUP: PROFESSIONAL SERVICE (with Service Types)      -->
-    <!-- ============================================================ -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "BSPX Studio",
-        "url": "https://www.bspxstudio.com",
-        "logo": "https://www.bspxstudio.com/logo192.png",
-        "image": "https://www.bspxstudio.com/og-image.png",
-        "description": "Professional photography and video services based in Coimbatore, serving all India. Outdoor portraits, birthday shoots, couple shoots, baby shoots, pre/post wedding shoots, model shoots, events, reels, highlight edits, and photo frames.",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Coimbatore",
-          "addressRegion": "Tamil Nadu",
-          "addressCountry": "India"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "11.0168",
-          "longitude": "76.9558"
-        },
-        "areaServed": {
-          "@type": "Country",
-          "name": "India"
-        },
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "email": "bspxstudio@gmail.com",
-          "telephone": "+918531985733",
-          "contactType": "Customer Service",
-          "availableLanguage": ["English", "Tamil"]
-        },
-        "sameAs": [
-          "https://www.instagram.com/bspxstudio",
-          "https://www.facebook.com/bspxstudio"
-        ],
-        "priceRange": "₹₹"
-      }
-    </script>
-
-    <!-- ============================================================ -->
-    <!-- SCHEMA MARKUP: AGGREGATE RATING (Trust Signal)                -->
+    <!-- SCHEMA MARKUP: AGGREGATE RATING                               -->
     <!-- ============================================================ -->
     <script type="application/ld+json">
       {
@@ -256,99 +218,28 @@
     </script>
 
     <!-- ============================================================ -->
-    <!-- SCHEMA MARKUP: FAQ PAGE (Answer Engine Optimization)          -->
+    <!-- SCHEMA MARKUP: WEBSITE                                        -->
     <!-- ============================================================ -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Where is BSPX Studio located?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "BSPX Studio is based in Coimbatore, Tamil Nadu. We provide photography services all over India including Chennai, Bangalore, Hyderabad, Mumbai, Delhi, Kerala, Goa, and small towns. We travel to your location."
-            }
+        "@type": "WebSite",
+        "url": "https://www.bspxstudio.com",
+        "name": "BSPX Studio",
+        "description": "Professional photography and video services based in Coimbatore, serving all India.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.bspxstudio.com/?s={search_term_string}"
           },
-          {
-            "@type": "Question",
-            "name": "How to book a photoshoot with BSPX Studio?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Simply send an email to bspxstudio@gmail.com with your city, type of shoot, preferred date, and number of people. We will reply within 24 hours with price and availability."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does BSPX Studio only shoot in Coimbatore?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. We are based in Coimbatore but we shoot everywhere in India. Travel charges may apply depending on distance. Email us your city and we will tell you the exact cost."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How much does a photoshoot cost at BSPX Studio?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Prices depend on the shoot type, location, duration, and extras like reels, highlight edits, or photo frames. For an exact price, email us at bspxstudio@gmail.com with your requirements. We have simple, clear pricing with no hidden fees."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How far in advance should I book a shoot?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "At least 7 to 10 days before your preferred date. For wedding or event shoots, book 15 to 30 days early. For weekend shoots in Coimbatore, book early because slots fill fast."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What types of photography services does BSPX Studio offer?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "We offer outdoor portraits, birthday shoots, couple shoots, baby shoots, model shoots, event photography, pre-wedding shoots, post-wedding shoots, family shoots, influencer shoots, cinematic reels, highlight edits, and photo frames."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How long does it take to get the edited photos?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "You get your edited photos and reels within 7 to 10 days after the shoot."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do you shoot outdoor portraits in Coimbatore?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, we specialize in outdoor portrait photography in Coimbatore. We shoot at parks, lakes, rooftops, streets, and hills like Ooty and Kodaikanal. Natural light and real backgrounds are our specialty."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What are the best locations for couple shoots in Coimbatore?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Popular couple shoot locations in Coimbatore include TNAU Botanical Garden, Perur Lake, Brookefields Park, Isha Yoga Center, and Ooty for day trips. We also shoot in Goa, Pondicherry, and Kerala for destination couple shoots."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is BSPX Studio available for baby shoots?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, we specialize in baby shoots. We are patient, safe, and work at the baby's pace. We shoot newborn, 6-month, and 1st birthday milestones at your home or outdoor locations. No rushing, no forcing – just pure cute expressions."
-            }
-          }
-        ]
+          "query-input": "required name=search_term_string"
+        }
       }
     </script>
 
     <!-- ============================================================ -->
-    <!-- SCHEMA MARKUP: BREADCRUMBLIST                                 -->
+    <!-- SCHEMA MARKUP: BREADCRUMB LIST                                -->
     <!-- ============================================================ -->
     <script type="application/ld+json">
       {
@@ -390,234 +281,25 @@
     </script>
 
     <!-- ============================================================ -->
-    <!-- SCHEMA MARKUP: SERVICES (ItemList of all 10 services)         -->
-    <!-- ============================================================ -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "Photography Services by BSPX Studio",
-        "description": "Complete list of professional photography services available in Coimbatore and across India.",
-        "url": "https://www.bspxstudio.com",
-        "numberOfItems": "10",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@type": "Service",
-              "name": "Outdoor Portrait Photography",
-              "description": "Natural light portraits capturing personality, mood, and location in one cinematic frame. Available in Coimbatore, Ooty, and across India.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Portrait Photography",
-              "url": "https://www.bspxstudio.com/#outdoor-portraits"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "item": {
-              "@type": "Service",
-              "name": "Birthday Photography",
-              "description": "Fun, colorful, and candid birthday shoots for kids and adults. Celebrate milestones with vibrant frames in Coimbatore and all India.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Birthday Photography",
-              "url": "https://www.bspxstudio.com/#birthday-shoots"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "item": {
-              "@type": "Service",
-              "name": "Couple Photography",
-              "description": "Romantic and creative couple shoots designed around chemistry, story, and location. Ideal for pre-wedding, anniversary, and engagement shoots in Goa, Pondicherry, Ooty, and all India.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Couple Photography",
-              "url": "https://www.bspxstudio.com/#couple-shoots"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "item": {
-              "@type": "Service",
-              "name": "Baby Photography",
-              "description": "Safe, patient, and detail-led baby shoots capturing cute expressions and calm moments. Newborn to toddler shoots in Coimbatore, Chennai, Bangalore, and across India.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Baby Photography",
-              "url": "https://www.bspxstudio.com/#baby-shoots"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 5,
-            "item": {
-              "@type": "Service",
-              "name": "Cinematic Reels",
-              "description": "Professional vertical reels made for Instagram, memories, and brand storytelling. 15-60 second cinematic videos with music and transitions.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Cinematic Reels",
-              "url": "https://www.bspxstudio.com/#cinematic-reels"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 6,
-            "item": {
-              "@type": "Service",
-              "name": "Highlight Edits",
-              "description": "Raw clips turned into emotional highlight films with pacing, music, and rhythm. 2-3 minute story-driven films for events and shoots.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Video Editing",
-              "url": "https://www.bspxstudio.com/#highlight-edits"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 7,
-            "item": {
-              "@type": "Service",
-              "name": "Photo Frames",
-              "description": "Premium printed photo frames for homes, gifting, and keepsakes. High-quality physical prints shipped across India.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Photo Printing",
-              "url": "https://www.bspxstudio.com/#photo-frames"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 8,
-            "item": {
-              "@type": "Service",
-              "name": "Pre-Wedding & Post-Wedding Photography",
-              "description": "Emotional and relaxed couple storytelling before and after the wedding with cinematic direction. Available in Coimbatore, Goa, Kerala, Rajasthan, and all India.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Wedding Photography",
-              "url": "https://www.bspxstudio.com/#wedding-shoots"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 9,
-            "item": {
-              "@type": "Service",
-              "name": "Model Photography",
-              "description": "Portfolio-ready fashion and editorial frames built around styling, confidence, and visual identity. For aspiring models, influencers, and actors in Chennai, Bangalore, Mumbai, and across India.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Fashion Photography",
-              "url": "https://www.bspxstudio.com/#model-shoots"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 10,
-            "item": {
-              "@type": "Service",
-              "name": "Event Photography",
-              "description": "Full event coverage capturing emotion, people, energy, and atmosphere for birthdays, anniversaries, family gatherings, launches, and private celebrations.",
-              "provider": {
-                "@type": "Photographer",
-                "name": "BSPX Studio"
-              },
-              "areaServed": "India",
-              "serviceType": "Event Photography",
-              "url": "https://www.bspxstudio.com/#event-photography"
-            }
-          }
-        ]
-      }
-    </script>
-
-    <!-- ============================================================ -->
-    <!-- SCHEMA MARKUP: WEBSITE (For AEO / Answer Engine)              -->
-    <!-- ============================================================ -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "url": "https://www.bspxstudio.com",
-        "name": "BSPX Studio",
-        "description": "Professional photography and video services based in Coimbatore, serving all India.",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://www.bspxstudio.com/?s={search_term_string}"
-          },
-          "query-input": "required name=search_term_string"
-        }
-      }
-    </script>
-
-    <!-- ============================================================ -->
-    <!-- SCHEMA MARKUP: CONTACT PAGE (For AEO)                         -->
-    <!-- ============================================================ -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "ContactPage",
-        "name": "Contact BSPX Studio",
-        "description": "Contact BSPX Studio for professional photography services in Coimbatore and across India.",
-        "url": "https://www.bspxstudio.com/#contact",
-        "mainEntity": {
-          "@type": "ContactPoint",
-          "email": "bspxstudio@gmail.com",
-          "telephone": "+918531985733",
-          "contactType": "Customer Service",
-          "availableLanguage": ["English", "Tamil"]
-        }
-      }
-    </script>
-
-    <!-- ============================================================ -->
     <!-- FONTS                                                         -->
     <!-- ============================================================ -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- ============================================================ -->
+    <!-- PRELOAD CRITICAL RESOURCES                                    -->
+    <!-- ============================================================ -->
+    <link rel="preload" as="image" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="preload" as="image" href="%PUBLIC_URL%/og-image.png" />
+
+    <!-- ============================================================ -->
+    <!-- SECURITY HEADERS                                              -->
+    <!-- ============================================================ -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
 
     <!-- SEO Fallback -->
-    <noscript>You need to enable JavaScript to run BSPX Studio.</noscript>
+    <noscript>You need to enable JavaScript to run BSPX Studio. For the best experience, please enable JavaScript in your browser.</noscript>
   </head>
 
   <body>
