@@ -19,7 +19,7 @@ import MobileImg2 from "../../assests/gallery/gallery2.webp";
 import MobileImg3 from "../../assests/gallery/gallery3.webp";
 import MobileImg4 from "../../assests/gallery/gallery4.webp";
 
-const WHATSAPP_NUMBER = "918531985733";
+const WHATSAPP_NUMBER = "919994917537";
 
 const slides = [
   {
@@ -244,7 +244,7 @@ export default function Hero() {
                     href={`tel:+${WHATSAPP_NUMBER}`}
                     className="font-sans text-sm tracking-wide text-white/90 hover:text-[#D4A53A] transition-colors"
                   >
-                    +91 8531985733
+                    +91 9994917537
                   </a>
                 </div>
               </div>

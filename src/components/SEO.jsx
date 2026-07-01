@@ -76,7 +76,7 @@ const SEO = ({
     image: 'https://bspx-website.vercel.app/og-image.png',
     description: seoData.description,
     email: 'bspxstudio@gmail.com',
-    telephone: '+918531985733',
+    telephone: '+919994917537',
     address: {
       '@type': 'PostalAddress',
       addressLocality: seoData.location,
@@ -96,7 +96,7 @@ const SEO = ({
     contactPoint: {
       '@type': 'ContactPoint',
       email: 'bspxstudio@gmail.com',
-      telephone: '+918531985733',
+      telephone: '+919994917537',
       contactType: 'Customer Service',
       availableLanguage: ['English', 'Tamil'],
       responseTime: 'PT24H',

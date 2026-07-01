@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 
-const WHATSAPP_NUMBER = "918531985733";
+const WHATSAPP_NUMBER = "919994917537";
 
 const steps = [
   {
