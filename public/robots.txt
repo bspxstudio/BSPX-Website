@@ -1,93 +1,9 @@
-# ============================================================
-# ROBOTS.TXT - BSPX Studio
-# ============================================================
-# This file tells search engines which pages to crawl and index.
-# Last updated: June 2026
-# ============================================================
-
+# Allow all crawlers
 User-agent: *
-Allow: /
-Disallow: /private/
-Disallow: /admin/
-Disallow: /api/
-Disallow: /assets/
 
-# Sitemap Location
+# Sitemaps
 Sitemap: https://www.bspxstudio.com/sitemap.xml
 
-# Crawl Delay (for aggressive crawlers)
-Crawl-delay: 5
-
-# ============================================================
-# SPECIFIC USER-AGENT RULES
-# ============================================================
-
-# Googlebot
-User-agent: Googlebot
-Allow: /
-Disallow: /private/
-Disallow: /admin/
-Disallow: /api/
-Crawl-delay: 1
-
-# Bingbot
-User-agent: Bingbot
-Allow: /
-Disallow: /private/
-Disallow: /admin/
-Disallow: /api/
-Crawl-delay: 2
-
-# ============================================================
-# SEO SPIDERS - Allow all SEO-friendly crawlers
-# ============================================================
-
-User-agent: Googlebot-Image
-Allow: /*.png$
-Allow: /*.jpg$
-Allow: /*.webp$
-Allow: /*.jpeg$
-
-User-agent: Googlebot-Video
-Allow: /*.mp4$
-Allow: /*.webm$
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: FacebookExternalHit
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
-User-agent: Pinterestbot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-# ============================================================
-# BAD BOTS - Block malicious or useless crawlers
-# ============================================================
-
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: SemrushBot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: Rogerbot
-Disallow: /
-
-# ============================================================
-# HOST
-# ============================================================
-
-Host: https://www.bspxstudio.com
+# Paths to disallow (optional - leave empty if you want everything indexed)
+# Disallow: /admin
+# Disallow: /private

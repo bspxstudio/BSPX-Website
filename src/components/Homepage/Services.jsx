@@ -13,7 +13,7 @@ import OutdoorPortraits from "../../assests/gallery/Outdoor Portraits.webp";
 import PhotoFrames from "../../assests/gallery/Photo Frames.webp";
 import PrePostWedding from "../../assests/gallery/Pre & Post Wedding.webp";
 
-const WHATSAPP_NUMBER = "919994917537";
+const WHATSAPP_NUMBER = "918531985733";
 
 const getWhatsappLink = (serviceTitle = "Photography Shoot") =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(

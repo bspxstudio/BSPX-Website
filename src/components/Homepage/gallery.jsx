@@ -20,7 +20,7 @@ import EventPhotography from "../../assests/gallery/Event Photography.webp";
 import ModelShoots from "../../assests/gallery/Model Shoots.webp";
 import PhotoFrames from "../../assests/gallery/Photo Frames.webp";
 
-const WHATSAPP_NUMBER = "919994917537";
+const WHATSAPP_NUMBER = "918531985733";
 
 const galleryItems = [
   {

@@ -2,7 +2,7 @@ import React from "react";
 import {
   Instagram,
   Facebook,
-  Youtube,
+  
   Mail,
   MapPin,
   Phone,
@@ -18,8 +18,6 @@ export default function Footer() {
     "Our Work",
     "Our Process",
     "Blog",
-    "FAQ",
-    "Reviews",
     "Contact Us",
   ];
 
@@ -46,11 +44,7 @@ export default function Footer() {
       icon: Facebook,
       href: "https://www.facebook.com/profile.php?id=61590660396444",
     },
-    { 
-      name: "YouTube", 
-      icon: Youtube, 
-      href: "#" 
-    },
+   
   ];
 
   return (

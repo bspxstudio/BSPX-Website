@@ -27,7 +27,7 @@ import Gallery2 from "../../assests/gallery/gallery2.webp";
 import Gallery3 from "../../assests/gallery/gallery3.webp";
 import Gallery4 from "../../assests/gallery/gallery4.webp";
 
-const WHATSAPP_NUMBER = "919994917537";
+const WHATSAPP_NUMBER = "918531985733";
 
 const galleryItems = [
   {

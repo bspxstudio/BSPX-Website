@@ -457,7 +457,7 @@ export default function Testimonials() {
 
             <div className="mt-6 flex flex-wrap gap-4">
               <a
-                href="https://wa.me/919994917537?text=Hi%20BSPX%20Studio,%20I%20want%20to%20submit%20a%20video%20review%20for%20my%20recent%20shoot."
+                href="https://wa.me/918531985733?text=Hi%20BSPX%20Studio,%20I%20want%20to%20submit%20a%20video%20review%20for%20my%20recent%20shoot."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#25D366] px-6 py-3 font-['Montserrat',sans-serif] text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-[#1DA851]"
@@ -526,7 +526,7 @@ export default function Testimonials() {
             </a>
 
             <a
-              href="https://wa.me/919994917537?text=Hi%20BSPX%20Studio,%20I%20want%20to%20share%20my%20review%20for%20my%20recent%20shoot."
+              href="https://wa.me/918531985733?text=Hi%20BSPX%20Studio,%20I%20want%20to%20share%20my%20review%20for%20my%20recent%20shoot."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 border border-stone-300 bg-white px-9 py-4 font-['Montserrat',sans-serif] text-xs font-semibold uppercase tracking-wider text-[#0A0A0A] transition hover:bg-stone-100"
