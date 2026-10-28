@@ -1,5 +1,5 @@
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
 
 const products = [
@@ -88,7 +88,7 @@ const products = [
     oldPrice: null,
     color: "Graphic",
     image:
-      "https://images.unsplash.com/photo-155 shirt-placeholder",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85",
     badge: "NEW",
   },
 ];
@@ -100,11 +100,47 @@ const categories = [
   "Graphic T-Shirts",
 ];
 
+const readCart = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem("cart") || "[]");
+    return Array.isArray(saved)
+      ? saved.filter((item) => item && item.id != null)
+      : [];
+  } catch {
+    return [];
+  }
+};
+
 export default function ProcessPage() {
   const [activeCategory, setActiveCategory] = useState("All Products");
   const [sortBy, setSortBy] = useState("featured");
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(readCart);
   const [notice, setNotice] = useState("");
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      window.dispatchEvent(new Event("cartUpdated"));
+    } catch (error) {
+      console.error("Unable to save cart:", error);
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    const syncCart = () => {
+      const latest = readCart();
+      setCart((current) =>
+        JSON.stringify(current) === JSON.stringify(latest) ? current : latest
+      );
+    };
+
+    window.addEventListener("cartUpdated", syncCart);
+    window.addEventListener("storage", syncCart);
+    return () => {
+      window.removeEventListener("cartUpdated", syncCart);
+      window.removeEventListener("storage", syncCart);
+    };
+  }, []);
 
   const visibleProducts = useMemo(() => {
     let result =
@@ -126,9 +162,26 @@ export default function ProcessPage() {
   }, [activeCategory, sortBy]);
 
   const addToCart = (product) => {
-    setCart((current) => [...current, product]);
-    setNotice(`${product.name} added to cart`);
-    window.setTimeout(() => setNotice(""), 2200);
+    // Use a default Medium size because this grid has no size selector.
+    const size = "M";
+
+    setCart((current) => {
+      const existing = current.find(
+        (item) => item.id === product.id && (item.size || "M") === size
+      );
+
+      if (existing) {
+        return current.map((item) =>
+          item.id === product.id && (item.size || "M") === size
+            ? { ...item, quantity: (Number(item.quantity) || 1) + 1 }
+            : item
+        );
+      }
+
+      return [...current, { ...product, size, quantity: 1 }];
+    });
+
+    setNotice(`${product.name} added to cart (size ${size}).`);
   };
 
   return (
@@ -611,7 +664,15 @@ export default function ProcessPage() {
 
       {notice && (
         <div className="bspx-cart-status" role="status">
-          {notice} · Cart items: {cart.length}
+          <span>{notice} · Cart items: {cart.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0)}</span>
+          <button
+            type="button"
+            onClick={() => setNotice("")}
+            aria-label="Dismiss notification"
+            style={{ marginLeft: 12, textDecoration: "underline", background: "transparent", color: "inherit", border: 0, cursor: "pointer" }}
+          >
+            Dismiss
+          </button>
         </div>
       )}
     </main>

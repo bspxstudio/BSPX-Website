@@ -13,6 +13,7 @@ import Cartpage from "./components/pages/cart"; // Fixed import path
 import Shop from "./components/pages/shoppage"; // Fixed import path
 import Checkoutpage from "./components/pages/checkout"; // Fixed import path
 import Blogpage from "./components/pages/Blogpage"; // Fixed import path
+import Scrollmodel from "./components/pages/3dscrollmodel"; // Fixed import path
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       />
 
       <Nav />
+    
 
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -39,7 +41,7 @@ function App() {
         <Route path="/checkout" element={<Checkoutpage />} />
         <Route path="/blog" element={<Blogpage />} />
       </Routes>
-
+  <Scrollmodel />
       <Whatsapp />
       <ScrollToTop />
       <Footer />

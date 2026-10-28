@@ -1,5 +1,6 @@
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -116,14 +117,57 @@ const money = (amount) =>
     maximumFractionDigits: 0,
   }).format(amount);
 
+const readSavedCart = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem("cart") || "[]");
+    return Array.isArray(saved) ? saved.filter((item) => item && item.id != null) : [];
+  } catch {
+    return [];
+  }
+};
+
 export default function GalleryGrid() {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("All Pieces");
   const [selectedSizes, setSelectedSizes] = useState({});
   const [wishlist, setWishlist] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(readSavedCart);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [notice, setNotice] = useState("");
+
+  // Keep the bag shared with CartPage, CheckoutPage and the navigation badge.
+  useEffect(() => {
+    try {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      window.dispatchEvent(new Event("cartUpdated"));
+    } catch (error) {
+      console.error("Unable to save cart:", error);
+    }
+  }, [cart]);
+
+  useEffect(() => {
+    const syncCart = () => {
+      let savedCart = [];
+      try {
+        const parsed = JSON.parse(localStorage.getItem("cart") || "[]");
+        savedCart = Array.isArray(parsed) ? parsed.filter((item) => item && item.id != null) : [];
+      } catch {
+        savedCart = [];
+      }
+
+      setCart((current) =>
+        JSON.stringify(current) === JSON.stringify(savedCart) ? current : savedCart
+      );
+    };
+
+    window.addEventListener("cartUpdated", syncCart);
+    window.addEventListener("storage", syncCart);
+    return () => {
+      window.removeEventListener("cartUpdated", syncCart);
+      window.removeEventListener("storage", syncCart);
+    };
+  }, []);
 
   const filteredProducts = useMemo(() => {
     if (activeCategory === "All Pieces") return products;
@@ -908,11 +952,10 @@ export default function GalleryGrid() {
 
                   <button
                     type="button"
-                    onClick={() =>
-                      setNotice(
-                        "Connect your ecommerce checkout and payment provider to accept orders."
-                      )
-                    }
+                    onClick={() => {
+                      setCartOpen(false);
+                      navigate("/checkout");
+                    }}
                     className="accent-button mt-5 flex w-full items-center justify-center gap-3 bg-[#191919] px-5 py-4 text-[10px] font-semibold uppercase tracking-[0.12em] text-white hover:bg-[#ff7a00] sm:text-xs"
                   >
                     Continue to checkout

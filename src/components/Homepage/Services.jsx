@@ -1,5 +1,6 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -150,25 +151,40 @@ const formatPrice = (price) =>
   }).format(price);
 
 export default function Products() {
-  const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
+
+  const [cart, setCart] = useState(() => {
+    try {
+      const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      return Array.isArray(savedCart) ? savedCart : [];
+    } catch {
+      return [];
+    }
+  });
   const [selectedSizes, setSelectedSizes] = useState({});
   const [activeProduct, setActiveProduct] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
   const [notice, setNotice] = useState("");
 
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  useEffect(() => {
+    try {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      window.dispatchEvent(new Event("cartUpdated"));
+    } catch (error) {
+      console.error("Unable to save cart:", error);
+    }
+  }, [cart]);
+
+  const cartCount = cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0);
   const cartTotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
 
   const addToCart = (product) => {
-    const size = selectedSizes[product.id];
-
-    if (!size) {
-      setNotice(`Please select a size for ${product.name}.`);
-      return;
-    }
+    // Default to Medium if the customer clicks Add to Cart without choosing a size.
+    // Customers can still select S, M, L, or XL before adding.
+    const size = selectedSizes[product.id] || "M";
 
     setCart((previous) => {
       const existing = previous.find(
@@ -186,8 +202,9 @@ export default function Products() {
       return [...previous, { ...product, size, quantity: 1 }];
     });
 
-    setNotice(`${product.name} added to your bag.`);
+    setNotice(`${product.name} — Size ${size} added to your bag.`);
     setActiveProduct(null);
+    setCartOpen(true);
   };
 
   const changeQuantity = (id, size, change) => {
@@ -195,7 +212,7 @@ export default function Products() {
       previous
         .map((item) =>
           item.id === id && item.size === size
-            ? { ...item, quantity: item.quantity + change }
+            ? { ...item, quantity: Math.max(0, Number(item.quantity || 0) + change) }
             : item
         )
         .filter((item) => item.quantity > 0)
@@ -204,10 +221,9 @@ export default function Products() {
 
   const removeFromCart = (id, size) => {
     setCart((previous) =>
-      previous.filter(
-        (item) => !(item.id === id && item.size === size)
-      )
+      previous.filter((item) => !(item.id === id && item.size === size))
     );
+    setNotice("Product removed from your bag.");
   };
 
   return (
@@ -736,11 +752,10 @@ export default function Products() {
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setNotice(
-                      "Connect your checkout and payment gateway to complete your order."
-                    )
-                  }
+                  onClick={() => {
+                    setCartOpen(false);
+                    navigate("/checkout");
+                  }}
                   className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#171714] text-[10px] font-semibold uppercase tracking-wider text-white transition hover:bg-[#819a49]"
                 >
                   Proceed to checkout

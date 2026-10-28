@@ -1,29 +1,6 @@
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet";
-
-const initialProducts = [
-  {
-    id: 1,
-    name: "Essential Cotton T-Shirt",
-    variant: "Black / Regular Fit",
-    size: "M",
-    price: 699,
-    quantity: 1,
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=85",
-  },
-  {
-    id: 2,
-    name: "Oversized Streetwear Tee",
-    variant: "Off White / Oversized",
-    size: "L",
-    price: 899,
-    quantity: 1,
-    image:
-      "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=500&q=85",
-  },
-];
 
 const formatPrice = (amount) =>
   new Intl.NumberFormat("en-IN", {
@@ -53,8 +30,52 @@ export default function CheckoutPage() {
   const [promoMessage, setPromoMessage] = useState("");
   const [notice, setNotice] = useState("");
 
-  // Sample cart data. Replace this with your real cart/store data.
-  const [products] = useState(initialProducts);
+  // Read the actual cart saved by Products.jsx / CartPage.jsx.
+  const [products, setProducts] = useState(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const savedCart = JSON.parse(window.localStorage.getItem("cart") || "[]");
+      if (!Array.isArray(savedCart)) return [];
+      return savedCart.map((item, index) => ({
+        ...item,
+        id: item.id ?? item.productId ?? index,
+        name: item.name || item.title || "BSPX Clothing product",
+        variant: item.variant || item.color || item.description || "",
+        size: item.size || "M",
+        price: Number(item.price ?? item.amount ?? 0),
+        quantity: Math.max(1, Number(item.quantity) || 1),
+        image: item.image || item.imageUrl || "",
+      }));
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    const syncCart = () => {
+      try {
+        const savedCart = JSON.parse(window.localStorage.getItem("cart") || "[]");
+        setProducts(Array.isArray(savedCart) ? savedCart.map((item, index) => ({
+          ...item,
+          id: item.id ?? item.productId ?? index,
+          name: item.name || item.title || "BSPX Clothing product",
+          variant: item.variant || item.color || item.description || "",
+          size: item.size || "M",
+          price: Number(item.price ?? item.amount ?? 0),
+          quantity: Math.max(1, Number(item.quantity) || 1),
+          image: item.image || item.imageUrl || "",
+        })) : []);
+      } catch {
+        setProducts([]);
+      }
+    };
+    window.addEventListener("cartUpdated", syncCart);
+    window.addEventListener("storage", syncCart);
+    return () => {
+      window.removeEventListener("cartUpdated", syncCart);
+      window.removeEventListener("storage", syncCart);
+    };
+  }, []);
 
   const subtotal = useMemo(
     () =>
@@ -88,9 +109,7 @@ export default function CheckoutPage() {
     setNotice("");
   };
 
-  const applyPromo = (e) => {
-    e.preventDefault();
-
+  const applyPromo = () => {
     if (promoCode.trim().toUpperCase() === "BSPX10") {
       setAppliedPromo("BSPX10");
       setPromoMessage("BSPX10 applied successfully.");
@@ -103,6 +122,11 @@ export default function CheckoutPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (products.length === 0) {
+      setNotice("Your cart is empty. Please add a product before checkout.");
+      return;
+    }
+
     setNotice(
       "Your details have been validated in this demo. Connect your checkout backend and payment gateway to place a real order."
     );
@@ -114,7 +138,7 @@ export default function CheckoutPage() {
     name: "Checkout | BSPX Clothing",
     description:
       "Enter delivery details and review your BSPX clothing order before payment.",
-    url: "https://yourdomain.com/checkout",
+    url: "https://www.bspxstudio.com/checkout",
   };
 
   return (
@@ -125,7 +149,7 @@ export default function CheckoutPage() {
           name="description"
           content="Complete your BSPX T-shirt order. Enter delivery details, choose shipping and review your order before checkout."
         />
-        <link rel="canonical" href="https://yourdomain.com/checkout" />
+        <link rel="canonical" href="https://www.bspxstudio.com/checkout" />
         <meta name="robots" content="noindex,follow" />
         <script type="application/ld+json">
           {JSON.stringify(schemaOrgJSONLD)}
@@ -687,18 +711,31 @@ export default function CheckoutPage() {
               </h2>
 
               <div className="mb-6 space-y-5 border-b border-[#e8e7df] pb-6">
-                {products.map((product) => (
+                {products.length === 0 ? (
+                  <div className="rounded-md bg-[#f5f4ee] p-4 text-sm text-[#77776f]">
+                    Your cart is empty. Add a product before continuing to checkout.
+                    <a href="/products" className="ml-1 font-semibold text-[#20211d] underline underline-offset-4">
+                      Shop now
+                    </a>
+                  </div>
+                ) : products.map((product) => (
                   <div
                     key={product.id}
                     className="checkout-product flex items-start gap-4"
                   >
                     <div className="relative h-24 w-[76px] shrink-0 overflow-hidden rounded-md bg-[#eeede6]">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="checkout-image h-full w-full object-cover"
-                        loading="lazy"
-                      />
+                      {product.image ? (
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="checkout-image h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-[10px] text-[#85857d]">
+                          BSPX
+                        </div>
+                      )}
 
                       <span className="absolute right-1 top-1 rounded-full bg-[#20211d] px-2 py-0.5 text-[10px] font-semibold text-white">
                         {product.quantity}
@@ -726,7 +763,7 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              <form onSubmit={applyPromo} className="mb-6">
+              <div className="mb-6">
                 <label
                   htmlFor="promoCode"
                   className="mb-2 block text-xs font-semibold"
@@ -747,7 +784,8 @@ export default function CheckoutPage() {
                   />
 
                   <button
-                    type="submit"
+                    type="button"
+                    onClick={applyPromo}
                     className="checkout-button rounded-md border border-[#20211d] px-4 py-3 text-xs font-bold hover:bg-[#20211d] hover:text-white"
                   >
                     Apply
@@ -762,7 +800,7 @@ export default function CheckoutPage() {
                     {promoMessage}
                   </p>
                 )}
-              </form>
+              </div>
 
               <div className="space-y-3 border-b border-[#e8e7df] pb-5 text-sm">
                 <div className="flex justify-between gap-3">
@@ -808,7 +846,8 @@ export default function CheckoutPage() {
 
               <button
                 type="submit"
-                className="checkout-button w-full rounded-md bg-[#20211d] px-5 py-4 text-xs font-bold uppercase tracking-[0.13em] text-white hover:bg-[#777b61]"
+                disabled={products.length === 0}
+                className="checkout-button w-full rounded-md bg-[#20211d] px-5 py-4 text-xs font-bold uppercase tracking-[0.13em] text-white hover:bg-[#777b61] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 {paymentMethod === "online"
                   ? "Continue to payment"
