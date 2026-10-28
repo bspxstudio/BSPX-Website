@@ -1,369 +1,360 @@
-import React from "react";
-import {
-  Camera,
-  MapPin,
-  ShieldCheck,
-  ArrowRight,
-  Video,
-  Mail,
-  Clock,
-  Instagram,
-  Facebook,
-  Linkedin,
-} from "lucide-react";
 
-import AboutImage from "../../assests/gallery/gallery2.webp";
+import React, { useEffect, useRef } from "react";
+
+const values = [
+  {
+    number: "01",
+    title: "Made to Wear",
+    description:
+      "Everyday essentials designed for effortless styling, all-day comfort, and a fit that feels right.",
+  },
+  {
+    number: "02",
+    title: "Express Yourself",
+    description:
+      "Minimal basics or bold statements. Discover pieces that let your personal style speak.",
+  },
+  {
+    number: "03",
+    title: "Quality First",
+    description:
+      "Thoughtful details, wearable designs, and quality you can feel from the very first wear.",
+  },
+  {
+    number: "04",
+    title: "Made for Everyone",
+    description:
+      "Fashion that fits your everyday life, your individuality, and the way you move.",
+  },
+];
 
 export default function About() {
-  const coreValues = [
-    {
-      icon: MapPin,
-      title: "We Travel Everywhere",
-      desc: "Based in Coimbatore, but we shoot across India.",
-    },
-    {
-      icon: Camera,
-      title: "All Services Under One Roof",
-      desc: "Photos, reels, edits, and frames. No running to different people.",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Clear Pricing",
-      desc: "You know the cost before we start. No last-minute surprises.",
-    },
-    {
-      icon: Clock,
-      title: "Fast Delivery",
-      desc: "Get your edited photos and reels within 7 to 10 days.",
-    },
-  ];
+  const sectionRef = useRef(null);
 
-  const brandFacts = [
-    {
-      icon: MapPin,
-      title: "Office Location",
-      desc: "Coimbatore",
-    },
-    {
-      icon: ShieldCheck,
-      title: "Service Area",
-      desc: "All over India",
-    },
-    {
-      icon: Camera,
-      title: "Specialties",
-      desc: "Outdoor, birthday, couple, baby, models, events",
-    },
-    {
-      icon: Video,
-      title: "Also Offer",
-      desc: "Reels, highlight edits, photo frames",
-    },
-    {
-      icon: Mail,
-      title: "Contact",
-      desc: "bspxstudio@gmail.com",
-    },
-  ];
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("about-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    section.querySelectorAll(".about-reveal").forEach((element) => {
+      observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="about"
-      className="relative min-h-screen w-full overflow-hidden bg-[#0A0A0A] text-white font-['Poppins',sans-serif]"
+      className="relative isolate overflow-hidden bg-[#f5f4ef] text-[#171717]"
     >
-      {/* Split Background */}
-      <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2">
-        <div className="relative bg-[#1C1C1C]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(212,165,58,0.16),transparent_34%)]" />
-          <div className="absolute inset-0 bg-black/45" />
-        </div>
+      <style>{`
+        .about-reveal {
+          opacity: 0;
+          transform: translateY(22px);
+          transition:
+            opacity 700ms ease,
+            transform 700ms ease;
+        }
 
-        <div className="relative bg-[#1E3A5F]">
-          <div className="absolute inset-0 bg-[#1f9d63]/80" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,rgba(255,122,0,0.20),transparent_34%)]" />
-          <div className="absolute inset-0 bg-black/10" />
-        </div>
-      </div>
+        .about-reveal.about-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
 
-      {/* Faded Background Text */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <h2 className="select-none font-['Bebas_Neue',sans-serif] text-[10rem] tracking-[0.08em] text-white/[0.025] md:text-[16rem] lg:text-[23rem]">
-          BSPX
-        </h2>
-      </div>
+        .about-delay-1 { transition-delay: 100ms; }
+        .about-delay-2 { transition-delay: 180ms; }
+        .about-delay-3 { transition-delay: 260ms; }
+        .about-delay-4 { transition-delay: 340ms; }
 
-      {/* Main Layout */}
-      <div className="relative z-10 min-h-screen px-6 py-10 md:px-12 lg:px-20">
-        {/* Top Brand Row */}
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="font-['Bebas_Neue',sans-serif] text-3xl tracking-wider text-white">
-              BSPX
-            </p>
-            <p className="font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-[0.35em] text-[#D4A53A]">
-              Studio
-            </p>
-          </div>
+        .about-orbit {
+          position: absolute;
+          border: 1px solid rgba(23, 23, 23, 0.12);
+          border-radius: 50%;
+          animation: aboutOrbit 28s linear infinite;
+          pointer-events: none;
+        }
 
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="border border-white/25 px-6 py-3 font-['Montserrat',sans-serif] text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:border-[#D4A53A] hover:bg-[#D4A53A] hover:text-[#0A0A0A]"
-          >
-            Booking
-          </button>
-        </div>
+        .about-orbit::before {
+          content: "";
+          position: absolute;
+          width: 7px;
+          height: 7px;
+          top: 12%;
+          left: 15%;
+          border-radius: 50%;
+          background: #c7ff38;
+        }
 
-        {/* Center Visual Image */}
-        <div className="pointer-events-none absolute bottom-0 left-1/2 z-20 hidden h-[82vh] w-[42vw] -translate-x-1/2 lg:block">
-          <img
-            src={AboutImage}
-            alt="BSPX Studio photography showcase"
-            className="h-full w-full object-cover object-center grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
-        </div>
+        .about-float {
+          animation: aboutFloat 5s ease-in-out infinite;
+        }
 
-        {/* Content Grid */}
-        <div className="grid min-h-[calc(100vh-80px)] grid-cols-1 items-center gap-12 lg:grid-cols-2">
-          {/* Left Content */}
-          <div className="relative z-30 max-w-xl pt-20 lg:pt-0">
-            <p className="mb-5 font-['Montserrat',sans-serif] text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A53A]">
-              About BSPX Studio
-            </p>
+        .about-grain {
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.15'/%3E%3C/svg%3E");
+          opacity: .12;
+          pointer-events: none;
+        }
 
-            <h1 className="font-['Bebas_Neue',sans-serif] text-6xl leading-[0.88] tracking-wide text-white md:text-8xl">
-              We Are
-              <br />
-              BSPX Studio
-            </h1>
+        .about-card {
+          transition:
+            background-color 350ms ease,
+            color 350ms ease,
+            transform 350ms ease,
+            border-color 350ms ease;
+        }
 
-            <p className="mt-6 font-['Montserrat',sans-serif] text-lg font-semibold leading-snug text-white/90 md:text-xl">
-              Born in Coimbatore, serving all of India.
-            </p>
+        .about-card:hover {
+          transform: translateY(-5px);
+          background: #c7ff38;
+          border-color: #c7ff38;
+          color: #171717;
+        }
 
-            <p className="mt-6 max-w-lg text-sm leading-relaxed text-white/60">
-              BSPX Studio started with a simple idea: everyone deserves beautiful
-              photos, no matter where they live. We are based in Coimbatore, but
-              we don&apos;t believe in boundaries. Whether you are in Chennai,
-              Mumbai, Bangalore, Kerala, Delhi, or a small town, we will come to
-              you.
-            </p>
+        .about-image {
+          transition: transform 900ms cubic-bezier(.2,.7,.2,1);
+        }
 
-            <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/60">
-              Our team loves capturing real smiles, honest emotions, and special
-              moments — from a baby&apos;s first birthday to a couple&apos;s first
-              look.
-            </p>
+        .about-image-wrap:hover .about-image {
+          transform: scale(1.04);
+        }
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="inline-flex items-center gap-3 bg-[#D4A53A] px-8 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-[0.22em] text-[#0A0A0A] transition hover:bg-[#FF7A00] hover:text-white"
-              >
-                Book Your Shoot
-                <ArrowRight className="h-4 w-4" />
-              </button>
+        @keyframes aboutOrbit {
+          to { transform: rotate(360deg); }
+        }
 
-              <a
-                href="mailto:bspxstudio@gmail.com"
-                className="inline-flex items-center gap-3 border border-white/15 bg-white/5 px-8 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-[0.22em] text-white transition hover:border-[#D4A53A] hover:text-[#D4A53A]"
-              >
-                Email Studio
-                <Mail className="h-4 w-4" />
-              </a>
+        @keyframes aboutFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .about-reveal,
+          .about-orbit,
+          .about-float,
+          .about-card,
+          .about-image {
+            animation: none !important;
+            transition: none !important;
+          }
+
+          .about-reveal {
+            opacity: 1;
+            transform: none;
+          }
+        }
+      `}</style>
+
+      {/* Decorative background */}
+      <div className="about-grain absolute inset-0 -z-10" />
+
+      <div className="pointer-events-none absolute -right-32 top-16 -z-10 h-80 w-80 rounded-full bg-[#c7ff38]/20 blur-[100px]" />
+
+      <div className="pointer-events-none absolute -left-32 bottom-0 -z-10 h-80 w-80 rounded-full bg-black/[0.04] blur-[100px]" />
+
+      {/* ABOUT INTRO */}
+      <div className="mx-auto max-w-[1400px] px-5 pb-16 pt-16 sm:px-8 sm:pb-20 sm:pt-24 lg:px-12 lg:pb-24 lg:pt-28">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
+          <div className="about-reveal relative z-10">
+            <div className="mb-6 flex items-center gap-3">
+              <span className="h-[2px] w-8 bg-[#171717]" />
+              <span className="text-xs font-medium uppercase tracking-[0.25em]">
+                Who We Are
+              </span>
             </div>
-          </div>
 
-          {/* Right Content */}
-          <div className="relative z-30 ml-auto max-w-md lg:pr-8">
-            <div className="mb-12 flex items-start justify-between">
-              <p className="font-['Montserrat',sans-serif] text-4xl font-black text-white">
-                03<span className="text-sm text-white/50">/05</span>
-              </p>
-
-              <div className="h-20 w-px bg-white/25" />
-            </div>
-
-            <p className="mb-6 font-['Montserrat',sans-serif] text-[10px] font-black uppercase tracking-[0.3em] text-white/55">
-              What We Do
-            </p>
-
-            <h2 className="font-['Bebas_Neue',sans-serif] text-5xl leading-[0.95] tracking-wide text-white md:text-6xl">
-              We Don&apos;t Just
+            <h2 className="max-w-3xl text-4xl font-semibold uppercase leading-[1.02] tracking-[-0.045em] sm:text-5xl md:text-6xl lg:text-7xl">
+              Not Just
               <br />
-              Click Photos.
+              Another
+              <br />
+              <span className="relative inline-block">
+                T-Shirt.
+                <span className="absolute -bottom-1 left-0 -z-10 h-2.5 w-full -rotate-1 bg-[#c7ff38] sm:h-3" />
+              </span>
             </h2>
 
-            <p className="mt-6 text-sm leading-relaxed text-white/70">
-              We create outdoor portraits, birthday shoots, couple shoots, baby
-              shoots, and event coverage. We also make trending reels, highlight
-              edits, and beautiful photo frames.
+            <p className="mt-7 max-w-xl text-sm leading-7 text-black/65 sm:text-base sm:leading-8">
+              We believe what you wear should feel like you. Our approach to
+              clothing is simple: comfortable fits, considered details, and
+              everyday styles that help you express yourself without trying
+              too hard.
             </p>
 
-            <p className="mt-5 text-sm leading-relaxed text-white/70">
-              Plus, we handle pre-wedding, post-wedding, and model shoots. One
-              call to{" "}
-              <a
-                href="mailto:bspxstudio@gmail.com"
-                className="font-bold text-[#D4A53A]"
-              >
-                bspxstudio@gmail.com
-              </a>{" "}
-              and we take care of everything — photography, video edits, and
-              printing.
+            <a
+              href="#about-values"
+              className="mt-8 inline-flex items-center rounded-full bg-[#171717] px-6 py-3.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-[#c7ff38] hover:text-black"
+            >
+              Discover Our Story
+            </a>
+
+            <p className="mt-5 text-[10px] font-medium uppercase tracking-[0.2em] text-black/45">
+              Style. Comfort. Identity.
             </p>
-
-            <button className="mt-8 font-['Montserrat',sans-serif] text-[10px] font-black uppercase tracking-[0.28em] text-white underline underline-offset-8 transition hover:text-[#D4A53A]">
-              Learn More
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom Controls / Social */}
-        <div className="absolute bottom-8 left-6 right-6 z-40 flex items-center justify-between md:left-12 md:right-12 lg:left-20 lg:right-20">
-          <div className="flex items-center gap-4 text-white/55">
-            <Facebook className="h-4 w-4 transition hover:text-[#D4A53A]" />
-            <Instagram className="h-4 w-4 transition hover:text-[#D4A53A]" />
-            <Linkedin className="h-4 w-4 transition hover:text-[#D4A53A]" />
           </div>
 
-          <button
-            onClick={() => scrollToSection("about-details")}
-            className="flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-[#0A0A0A]/40 font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-widest text-[#D4A53A] backdrop-blur-md transition hover:border-[#D4A53A]"
-          >
-            Scroll
-          </button>
+          {/* Clothing image */}
+          <div className="about-reveal about-delay-2 relative mx-auto w-full max-w-[560px]">
+            <div className="about-image-wrap relative aspect-[4/4.5] overflow-hidden rounded-[3px] bg-[#dfded6]">
+              <img
+                src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1200&q=85"
+                alt="Contemporary casual clothing and streetwear"
+                className="about-image h-full w-full object-cover"
+                loading="lazy"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
+
+              <div className="absolute left-5 top-5 rounded-full border border-white/30 bg-black/20 px-4 py-2.5 text-[10px] font-medium uppercase tracking-[0.2em] text-white backdrop-blur-md sm:left-7 sm:top-7">
+                Everyday. Elevated.
+              </div>
+
+              <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-8">
+                <p className="text-[10px] font-medium uppercase tracking-[0.25em] text-white/70">
+                  Your style, your rules
+                </p>
+
+                <p className="mt-2 text-2xl font-semibold uppercase leading-tight tracking-[-0.025em] text-white sm:text-3xl">
+                  Wear Your
+                  <br />
+                  Identity.
+                </p>
+              </div>
+            </div>
+
+            {/* Subtle animated graphic */}
+            <div className="about-orbit -right-7 -top-7 hidden h-32 w-32 sm:block lg:-right-9 lg:-top-9 lg:h-40 lg:w-40" />
+
+            {/* Floating text label */}
+            <div className="about-float absolute -bottom-4 -left-3 bg-[#c7ff38] px-5 py-4 shadow-lg sm:-left-7 sm:px-6 sm:py-5">
+              <p className="text-[9px] font-medium uppercase tracking-[0.2em] text-black/55">
+                The everyday uniform
+              </p>
+              <p className="mt-1 text-base font-semibold uppercase tracking-tight sm:text-lg">
+                Keep It Real.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Details Section */}
+      {/* BRAND STATEMENT STRIP */}
+      <div className="border-y border-black/10 bg-[#c7ff38] py-5 sm:py-6">
+        <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-center gap-x-5 gap-y-2 px-5 text-center sm:gap-x-8">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] sm:text-xs">
+            Less Noise
+          </span>
+
+          <span className="text-sm">/</span>
+
+          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] sm:text-xs">
+            More Personality
+          </span>
+
+          <span className="text-sm">/</span>
+
+          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] sm:text-xs">
+            Everyday Comfort
+          </span>
+        </div>
+      </div>
+
+      {/* BRAND VALUES */}
       <div
-        id="about-details"
-        className="relative z-20 bg-[#0A0A0A] px-6 py-28 md:px-12 lg:px-20"
+        id="about-values"
+        className="mx-auto max-w-[1400px] px-5 py-16 sm:px-8 sm:py-24 lg:px-12 lg:py-28"
       >
-        <div className="mx-auto max-w-[1700px]">
-          {/* Why Choose Us */}
-          <div className="mb-20">
-            <div className="mb-12 max-w-4xl">
-              <p className="mb-4 font-['Montserrat',sans-serif] text-[10px] font-black uppercase tracking-[0.3em] text-[#D4A53A]">
-                Why People Choose Us
-              </p>
+        <div className="about-reveal mb-10 flex flex-col justify-between gap-5 sm:mb-14 md:flex-row md:items-end">
+          <div>
+            <div className="mb-5 flex items-center gap-3">
+              <span className="h-[2px] w-8 bg-black" />
 
-              <h3 className="font-['Bebas_Neue',sans-serif] text-5xl leading-[0.95] tracking-wide text-white md:text-7xl">
-                Simple, Clear,
-                <br />
-                Reliable Photography Service
-              </h3>
+              <span className="text-xs font-medium uppercase tracking-[0.25em] text-black/55">
+                What We Stand For
+              </span>
             </div>
 
-            <div className="grid grid-cols-1 gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-              {coreValues.map((val, index) => (
-                <div
-                  key={index}
-                  className="group bg-[#1C1C1C] p-10 transition hover:bg-[#111111]"
-                >
-                  <div className="mb-8 inline-flex bg-[#D4A53A] p-4 text-[#0A0A0A] transition group-hover:bg-[#FF7A00] group-hover:text-white">
-                    <val.icon className="h-5 w-5" />
-                  </div>
-
-                  <h4 className="font-['Montserrat',sans-serif] text-base font-bold text-white">
-                    {val.title}
-                  </h4>
-
-                  <p className="mt-4 text-xs leading-relaxed text-white/50">
-                    {val.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <h3 className="max-w-2xl text-3xl font-semibold uppercase leading-[1.02] tracking-[-0.04em] sm:text-4xl md:text-5xl">
+              Good Clothes.
+              <br />
+              <span className="text-black/35">Good Energy.</span>
+            </h3>
           </div>
 
-          {/* Trust + Brand Facts */}
-          <div className="grid grid-cols-1 gap-px overflow-hidden border border-white/10 bg-white/10 lg:grid-cols-2">
-            <div className="bg-[#1C1C1C] p-10 md:p-14">
-              <p className="mb-5 font-['Montserrat',sans-serif] text-[10px] font-black uppercase tracking-[0.28em] text-[#D4A53A]">
-                Trust Promise
-              </p>
+          <p className="max-w-sm text-sm leading-7 text-black/60">
+            The little things matter. From the way a T-shirt fits to how it
+            makes you feel, we focus on what makes everyday clothing worth
+            wearing.
+          </p>
+        </div>
 
-              <h3 className="font-['Bebas_Neue',sans-serif] text-5xl leading-[0.95] tracking-wide text-white md:text-6xl">
-                Photos, Reels,
-                <br />
-                Edits, Frames —
-                <br />
-                One Studio
-              </h3>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {values.map((value, index) => (
+            <article
+              key={value.number}
+              className={`about-reveal about-card about-delay-${index + 1} flex min-h-[245px] flex-col border border-black/10 bg-white/40 p-6 sm:min-h-[270px] sm:p-7`}
+            >
+              <span className="text-xs font-medium tracking-[0.18em] text-black/45">
+                / {value.number}
+              </span>
 
-              <p className="mt-8 max-w-xl text-sm leading-relaxed text-white/60">
-                BSPX Studio keeps the complete photography workflow simple. You
-                do not need to coordinate with multiple vendors for shooting,
-                video editing, reels, highlight edits, or photo frames. We manage
-                the creative execution under one roof with clear communication,
-                simple pricing, and fast delivery.
-              </p>
-            </div>
+              <div className="mt-auto pt-12">
+                <h4 className="text-lg font-semibold uppercase tracking-tight sm:text-xl">
+                  {value.title}
+                </h4>
 
-            <div className="bg-[#1C1C1C] p-10 md:p-14">
-              <p className="mb-5 font-['Montserrat',sans-serif] text-[10px] font-black uppercase tracking-[0.28em] text-[#D4A53A]">
-                Behind The Scenes
-              </p>
-
-              <h3 className="font-['Bebas_Neue',sans-serif] text-5xl leading-[0.95] tracking-wide text-white md:text-6xl">
-                Brand Facts For
-                <br />
-                Visitors And AI
-              </h3>
-
-              <div className="mt-10 space-y-6">
-                {brandFacts.map((fact, index) => (
-                  <div key={index} className="flex gap-4">
-                    <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center bg-[#D4A53A] text-[#0A0A0A]">
-                      <fact.icon className="h-4 w-4" />
-                    </div>
-
-                    <div>
-                      <p className="font-['Montserrat',sans-serif] text-xs font-bold uppercase tracking-[0.18em] text-white/40">
-                        {fact.title}
-                      </p>
-                      <p className="mt-1 text-sm text-white/70">
-                        {fact.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                <p className="mt-3 text-sm leading-6 text-black/60">
+                  {value.description}
+                </p>
               </div>
-            </div>
-          </div>
+            </article>
+          ))}
+        </div>
+      </div>
 
-          {/* CTA */}
-          <div className="mx-auto mt-24 max-w-3xl border-t border-white/10 pt-20 text-center">
-            <p className="mb-5 font-['Montserrat',sans-serif] text-xs font-extrabold uppercase tracking-[0.25em] text-[#D4A53A]">
-              We pack our cameras and come to you
+      {/* FINAL ABOUT STATEMENT */}
+      <div className="about-reveal relative overflow-hidden bg-[#171717] px-5 py-14 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+        <div className="pointer-events-none absolute -right-24 -top-32 h-80 w-80 rounded-full border border-white/10" />
+
+        <div className="pointer-events-none absolute -right-12 -top-20 h-56 w-56 rounded-full border border-white/10" />
+
+        <div className="pointer-events-none absolute -bottom-24 -left-20 h-64 w-64 rounded-full bg-[#c7ff38]/10 blur-[80px]" />
+
+        <div className="relative mx-auto flex max-w-[1100px] flex-col items-start justify-between gap-7 md:flex-row md:items-end">
+          <div>
+            <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.25em] text-[#c7ff38]">
+              This Is Your Everyday
             </p>
 
-            <h3 className="mb-10 font-['Bebas_Neue',sans-serif] text-5xl leading-[0.95] tracking-wide text-white sm:text-7xl">
-              Ready To Capture Your Story?
+            <h3 className="max-w-3xl text-3xl font-semibold uppercase leading-[1.02] tracking-[-0.04em] sm:text-4xl md:text-5xl lg:text-6xl">
+              Wear What
+              <br />
+              Moves You.
             </h3>
+          </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="inline-flex items-center gap-3 rounded-full bg-[#D4A53A] px-9 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-wider text-[#0A0A0A] shadow-2xl transition hover:bg-[#FF7A00] hover:text-white active:scale-95"
-              >
-                Book Your Shoot <ArrowRight className="h-4 w-4" />
-              </button>
+          <p className="max-w-sm text-sm leading-7 text-white/60">
+            Find your fit. Build your look. Make every day your own. Your next
+            favourite T-shirt starts with your style.
+          </p>
+        </div>
 
-              <a
-                href="mailto:bspxstudio@gmail.com"
-                className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-9 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-wider text-white shadow-sm transition hover:border-[#D4A53A] hover:text-[#D4A53A] active:scale-95"
-              >
-                Email BSPX Studio <Mail className="h-4 w-4" />
-              </a>
-            </div>
+        <div className="relative mx-auto mt-10 max-w-[1100px] border-t border-white/15 pt-5">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+            <span>Designed for everyday life</span>
+            <span>Made for your kind of style</span>
           </div>
         </div>
       </div>

@@ -1,339 +1,318 @@
-import { useEffect, useState } from "react";
-import { Plus, Minus } from "lucide-react";
-import Lenis from "@studio-freight/lenis";
+
+import { useState } from "react";
 
 const faqCategories = [
   {
-    title: "General & Booking Questions",
+    title: "Orders",
     faqs: [
       {
-        question: "Where is BSPX Studio located?",
+        question: "How do I place an order?",
         answer:
-          "Our office is in Coimbatore, Tamil Nadu. But we provide photography services all over India — from Chennai, Bangalore, Hyderabad, and Mumbai to Delhi, Kerala, Goa, and small towns. We travel to your location.",
+          "Browse our T-shirt collection, select your preferred product, choose your size and colour if available, and add it to your cart. Follow the checkout instructions to complete your order.",
       },
       {
-        question: "How do I book a shoot with BSPX Studio?",
+        question: "Can I change or cancel my order?",
         answer:
-          "Very simple. Just send an email to bspxstudio@gmail.com with your city, type of shoot, preferred date, and number of people. We will reply within 24 hours with price and availability.",
+          "Contact our support team as soon as possible with your order details. Changes or cancellations depend on whether your order has already been processed or shipped.",
       },
       {
-        question: "Do you only shoot in Coimbatore?",
+        question: "How can I track my order?",
         answer:
-          "No. We are based in Coimbatore but we shoot everywhere in India. Travel charges may apply depending on distance. Email us your city and we will tell you the exact cost.",
+          "Once your order is dispatched, check your order confirmation or shipping notification for tracking information, if available.",
       },
       {
-        question: "How much does a photoshoot cost?",
+        question: "I received the wrong product. What should I do?",
         answer:
-          "Prices depend on the shoot type, location, duration, and extras like reels, highlight edits, or photo frames. For an exact price, email us at bspxstudio@gmail.com with your requirements. We have simple, clear pricing with no hidden fees.",
-      },
-      {
-        question: "How far in advance should I book?",
-        answer:
-          "At least 7 to 10 days before your preferred date. For wedding or event shoots, book 15 to 30 days early. For weekend shoots in Coimbatore, book early because slots fill fast.",
+          "Contact customer support with your order number and clear photos of the product received. Our team can review the issue and explain the available resolution.",
       },
     ],
   },
   {
-    title: "Shoot Day Questions",
+    title: "Size & Fit",
     faqs: [
       {
-        question: "How long does a photoshoot take?",
+        question: "How do I choose the right T-shirt size?",
         answer:
-          "Birthday shoot: 1 to 2 hours\nCouple shoot: 1 to 2 hours\nBaby shoot: 1 to 2 hours, based on the baby’s comfort\nOutdoor portraits: 1 to 2 hours\nModel shoot: 2 to 3 hours\nEvent shoot: 3 to 6 hours\nPre/post wedding shoot: 2 to 4 hours",
+          "Check the size chart on the product page before ordering. Compare the listed garment measurements with a T-shirt you already own to find your preferred fit.",
       },
       {
-        question: "What should we wear for the shoot?",
+        question: "Do you sell oversized T-shirts?",
         answer:
-          "Wear comfortable clothes that make you feel confident. Solid colors usually work best. Avoid very small prints or large logos. For couple shoots, matching colors are better than identical outfits. For baby shoots, soft and simple clothes work well. If you are unsure, email us and we will guide you for free.",
+          "Check the individual product description for the available fit. Products marked oversized are designed for a more relaxed silhouette than a regular-fit T-shirt.",
       },
       {
-        question: "Do you provide props, costumes, or outfits?",
+        question: "What if my T-shirt does not fit?",
         answer:
-          "No, we do not provide costumes or outfits. For birthday shoots, we can suggest simple props like balloons, cakes, or banners that you can arrange yourself. We focus on natural, candid photography rather than heavy setups.",
+          "Please review our return and exchange policy before placing an order. Eligibility depends on the product condition and the terms stated in the policy.",
       },
       {
-        question: "Can we choose the location?",
+        question: "Are the measurements in the size chart accurate?",
         answer:
-          "Yes. You can choose your home, a park, rooftop, farmhouse, or any outdoor location. If you are in Coimbatore and not sure where to go, we can suggest good spots. If you are in another city, we can research or follow your suggestion.",
-      },
-      {
-        question: "What if the weather is bad on shoot day?",
-        answer:
-          "We will contact you one day before. If rain or extreme heat is expected, we can reschedule to another date with no extra charge, shift to an indoor location, or continue if you are comfortable. Your safety and comfort come first.",
+          "The size chart provides the intended product measurements. Small manufacturing variations may occur, so review the measurements and fit notes on each product page.",
       },
     ],
   },
   {
-    title: "Photos, Videos & Delivery",
+    title: "Shipping",
     faqs: [
       {
-        question: "When do I get my edited photos?",
+        question: "Where do you deliver?",
         answer:
-          "You will receive your edited photos within 7 to 10 days after the shoot. We send a Google Drive link with high-resolution edited photos.",
+          "Available delivery locations are shown during checkout. Enter your complete address and postal code to check whether delivery is supported in your area.",
       },
       {
-        question: "Do you also make reels and highlight edits?",
+        question: "How long does delivery take?",
         answer:
-          "Yes. When you book, tell us if you want reels or highlight edits. We shoot short videos during your photoshoot and edit them with music and transitions. Delivery time for reels is also usually 7 to 10 days.",
+          "Delivery time depends on your location, order processing, and courier service. Check the estimated delivery information provided during checkout or in your shipping notification.",
       },
       {
-        question: "Can I see the photos before final editing?",
+        question: "Are shipping charges extra?",
         answer:
-          "Yes. We send low-resolution watermarked previews for your approval. You can request one free round of changes, such as removing one photo or brightening another. After you approve, we prepare the final high-resolution files.",
+          "Any applicable shipping charges are displayed during checkout before you confirm your order. The amount may vary based on your order and delivery location.",
       },
       {
-        question: "Do you provide physical photo frames?",
+        question: "What happens if my order is delayed?",
         answer:
-          "Yes. We print your best photos on high-quality paper and place them in beautiful frames. We ship frames to any address in India. Delivery takes 5 to 7 extra days after photo editing is complete.",
-      },
-      {
-        question: "How many photos will I get?",
-        answer:
-          "A 1-hour shoot usually includes 30 to 50 edited photos. A 2-hour shoot usually includes 50 to 80 edited photos. A full event usually includes 100 to 200 edited photos. Exact numbers depend on the shoot type and candid moments captured.",
+          "Check your latest tracking information first. If your delivery is overdue, contact customer support with your order number so the status can be reviewed.",
       },
     ],
   },
   {
-    title: "Payment & Cancellation",
+    title: "Returns",
     faqs: [
       {
-        question: "What is your payment process?",
+        question: "Can I return or exchange a T-shirt?",
         answer:
-          "We take 50% advance to confirm your booking after you agree to the price and date. The remaining 50% is paid after the shoot and before final photo delivery. We accept bank transfer, GPay, PhonePe, or cash in Coimbatore.",
+          "Returns and exchanges are subject to the current BSPX store policy and the eligibility of your item. Please check the published policy before requesting a return.",
       },
       {
-        question: "Can I cancel my shoot? Will I get a refund?",
+        question: "Can I return a product after wearing it?",
         answer:
-          "Cancel 7 or more days before the shoot: 100% refund of advance.\nCancel 3 to 6 days before the shoot: 50% refund of advance.\nCancel less than 3 days before the shoot: no refund because we block our calendar for you.\nIn case of emergency, talk to us. We try to be fair.",
+          "Returned products generally need to meet the store's condition requirements. Check the current return policy for rules about worn, washed, damaged, or altered items.",
       },
       {
-        question: "Do you charge extra for travel?",
+        question: "What should I do if my product is damaged?",
         answer:
-          "Within Coimbatore city, there is no travel charge. Outside Coimbatore, such as Pollachi, Tirupur, or Ooty, a small travel charge may apply. For other cities like Chennai, Bangalore, Mumbai, or Delhi, travel and accommodation may apply. Email us your exact location and we will tell you the total price before you book.",
+          "Contact customer support promptly with your order number and photographs showing the issue. Our team will review your request under the applicable store policy.",
+      },
+      {
+        question: "When will I receive my refund?",
+        answer:
+          "Refund timing depends on return approval, the payment method, and the payment provider. The support team can explain the applicable process once your request is reviewed.",
       },
     ],
   },
   {
-    title: "Service-Specific Questions",
+    title: "Products & Care",
     faqs: [
       {
-        question: "Do you do outdoor portraits in cities other than Coimbatore?",
+        question: "What material are BSPX T-shirts made from?",
         answer:
-          "Yes. We shoot outdoor portraits in Chennai, Bangalore, Hyderabad, Mumbai, Pune, Delhi, and many other cities. We come to your city. Just email us.",
+          "Material composition can vary by product. Check the fabric details on the individual product page for the specific T-shirt you want to purchase.",
       },
       {
-        question: "Can you shoot a birthday party at my home?",
+        question: "How should I wash my T-shirt?",
         answer:
-          "Yes. Birthday shoots at home are very common. Small or big, we manage. We also do outdoor birthday shoots in parks or farmhouses.",
+          "Follow the care instructions on the garment label. As a general precaution, wash with similar colours, avoid harsh treatment, and check the label before ironing or tumble drying.",
       },
       {
-        question: "Do you do couple shoots for anniversaries or just engagements?",
+        question: "Will the colour or fit change after washing?",
         answer:
-          "Both. We shoot engagement couple shoots, anniversary couple shoots, casual love-story shoots, and surprise proposal shoots. Tell us your story and we will capture it.",
+          "Results depend on the fabric, garment construction, and washing method. Following the care label helps maintain the garment's appearance and fit.",
       },
       {
-        question: "Is baby shoot safe? My baby is only 2 months old.",
+        question: "Will the product look exactly like the photos?",
         answer:
-          "Yes. We are very careful with newborn and young babies. We do not use harsh lights. We do not force poses. We shoot at the baby’s comfort level. Many parents in Coimbatore and other cities trust us for baby shoots.",
-      },
-      {
-        question: "Do you cover corporate events or small family events?",
-        answer:
-          "Yes. We cover birthday parties, anniversary parties, family get-togethers, corporate events, conferences, and small functions. Just email us the details.",
-      },
-      {
-        question: "What is a model shoot? Do I need experience?",
-        answer:
-          "A model shoot is for building your portfolio as an aspiring model, actor, influencer, or personal brand. You do not need experience. We guide you on poses, expressions, and outfits.",
-      },
-      {
-        question: "Do you edit reels and highlight edits if I already have video footage?",
-        answer:
-          "Yes. If you already have video clips from your phone or another camera, you can send them to us. We can edit them into a reel or highlight video with music and transitions. Pricing is different from a full photoshoot, so email us for details.",
+          "We aim to represent our products accurately. Actual colours may appear slightly different depending on lighting, photography, and your screen settings.",
       },
     ],
   },
   {
-    title: "Contact & Support",
+    title: "Payments",
     faqs: [
       {
-        question: "How can I contact BSPX Studio?",
+        question: "What payment methods can I use?",
         answer:
-          "The best way is email: bspxstudio@gmail.com. We check email every day. You can also continue the conversation through our reply for calls or WhatsApp if needed.",
+          "Available payment methods are displayed at checkout. The options shown there are the supported methods for your order.",
       },
       {
-        question: "Do you have a studio in Coimbatore where I can visit?",
+        question: "Is online payment secure?",
         answer:
-          "We have an office base in Coimbatore. For shoots, we usually come to your location, whether home or outdoor. If you want to meet and discuss before booking, email us and we can arrange a meeting in Coimbatore.",
+          "Complete your payment through the checkout process provided by the store. Never share your passwords, PINs, or one-time verification codes with anyone.",
       },
       {
-        question: "Do you serve small towns or villages, not just big cities?",
+        question: "My payment was deducted but the order is not confirmed. What should I do?",
         answer:
-          "Yes. We have shot in small towns like Pollachi, Udumalpet, Mettupalayam, and remote locations. If you have a location in India, we will try our best to come. Email us first so we can check travel feasibility.",
-      },
-      {
-        question: "I am not in Coimbatore. Can I still book without meeting you?",
-        answer:
-          "Yes. Many clients from other cities book us without meeting first. We plan everything over email and phone. On shoot day, we meet you directly at your location. It works smoothly.",
-      },
-      {
-        question: "Do you have a question that is not listed here?",
-        answer:
-          "Just email us at bspxstudio@gmail.com. Ask anything. We reply within 24 hours. No pressure. No spam.",
+          "Check your order history and confirmation messages first. If the order is still missing, contact support with the transaction reference and approximate payment time. Never share your full card details or PIN.",
       },
     ],
   },
 ];
 
 export default function FAQ() {
-  const [openCategory, setOpenCategory] = useState(0);
+  const [activeCategory, setActiveCategory] = useState(0);
   const [openIndex, setOpenIndex] = useState(0);
 
-  useEffect(() => {
-    const lenis = new Lenis({
-      smooth: true,
-      lerp: 0.1,
-      wheelMultiplier: 1.2,
-    });
+  const currentCategory = faqCategories[activeCategory];
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+  const handleCategoryChange = (index) => {
+    setActiveCategory(index);
+    setOpenIndex(0);
+  };
 
-    requestAnimationFrame(raf);
-
-    return () => lenis.destroy();
-  }, []);
-
-  const toggleFAQ = (catIdx, index) => {
-    if (openCategory === catIdx && openIndex === index) {
-      setOpenIndex(null);
-    } else {
-      setOpenCategory(catIdx);
-      setOpenIndex(index);
-    }
+  const toggleFAQ = (index) => {
+    setOpenIndex((previous) => (previous === index ? null : index));
   };
 
   return (
     <section
       id="faq"
-      className="relative flex justify-center overflow-hidden bg-[#090604] py-28 text-white md:py-40 font-['Poppins',sans-serif]"
+      className="bg-[#f5f4ef] py-14 font-['Poppins',sans-serif] text-[#171715] sm:py-16 lg:py-20"
     >
-      {/* Background Glow */}
-      <div className="pointer-events-none absolute left-[-10%] top-[10%] h-[420px] w-[420px] bg-[#D4A53A]/10 blur-[120px]" />
-      <div className="pointer-events-none absolute right-[-8%] bottom-[10%] h-[480px] w-[480px] bg-[#FF7A00]/10 blur-[140px]" />
-
-      <div className="relative z-10 mx-auto grid w-full max-w-[1700px] grid-cols-1 gap-16 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-12">
-        {/* Left Content */}
-        <div className="lg:sticky lg:top-28 lg:h-fit">
-          <span className="mb-8 inline-flex border border-white/10 bg-white/5 px-5 py-2 font-['Montserrat',sans-serif] text-[10px] font-semibold uppercase tracking-[0.28em] text-white/50">
-            FAQs
-          </span>
-
-          <h2 className="font-['Montserrat',sans-serif] text-4xl font-semibold leading-[1.05] tracking-tight text-white md:text-6xl">
-            Frequently asked
-            <br />
-            <span className="text-[#FF7A00]">questions</span>
-          </h2>
-
-          <p className="mt-7 max-w-md text-sm leading-relaxed text-white/40">
-            Simple answers, no confusion. Based in Coimbatore, serving all India.
-            Email: bspxstudio@gmail.com
+      <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
+        {/* Heading */}
+        <div className="mb-8 max-w-2xl sm:mb-10">
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#77756d]">
+            BSPX / Help centre
           </p>
 
-          {/* Category Navigation */}
-          <div className="mt-12 flex flex-wrap gap-3 lg:max-w-md">
-            {faqCategories.map((category, catIdx) => (
-              <button
-                key={category.title}
-                onClick={() => {
-                  setOpenCategory(catIdx);
-                  setOpenIndex(0);
-                }}
-                className={`border px-4 py-3 font-['Montserrat',sans-serif] text-[9px] font-semibold uppercase tracking-[0.18em] transition ${
-                  openCategory === catIdx
-                    ? "border-[#FF7A00] bg-[#FF7A00] text-white"
-                    : "border-white/10 bg-white/5 text-white/45 hover:border-[#FF7A00] hover:text-[#FF7A00]"
-                }`}
-              >
-                {category.title.replace(" Questions", "")}
-              </button>
-            ))}
-          </div>
+          <h2 className="text-3xl font-semibold leading-tight tracking-[-0.045em] sm:text-4xl">
+            Frequently asked questions
+          </h2>
 
-          <div className="mt-14 border-t border-white/10 pt-8">
-            <h3 className="font-['Montserrat',sans-serif] text-xl font-semibold text-white">
-              Still have a question?
-            </h3>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-[#77756d]">
+            Everything you need to know about our T-shirts, sizing, orders,
+            shipping, and shopping with BSPX.
+          </p>
+        </div>
 
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/40">
-              We answer every email personally. Whether you are in Coimbatore or
-              anywhere in India, just write to us.
+        {/* Category navigation */}
+        <div className="mb-8 flex flex-wrap gap-2 border-b border-black/10 pb-5">
+          {faqCategories.map((category, index) => (
+            <button
+              key={category.title}
+              type="button"
+              onClick={() => handleCategoryChange(index)}
+              aria-pressed={activeCategory === index}
+              className={`border px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.1em] transition-colors sm:px-5 ${
+                activeCategory === index
+                  ? "border-[#171715] bg-[#171715] text-white"
+                  : "border-black/10 bg-transparent text-[#77756d] hover:border-black/40 hover:text-[#171715]"
+              }`}
+            >
+              {category.title}
+            </button>
+          ))}
+        </div>
+
+        {/* FAQ content */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.65fr_1.35fr] lg:gap-16">
+          {/* Left information */}
+          <aside>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#77756d]">
+              Browse by topic
             </p>
 
-            <a
-              href="mailto:bspxstudio@gmail.com"
-              className="mt-7 inline-flex bg-[#FF7A00] px-7 py-4 font-['Montserrat',sans-serif] text-[10px] font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-[#D4A53A] hover:text-[#0A0A0A]"
-            >
-              Email bspxstudio@gmail.com now
-            </a>
+            <h3 className="mt-3 text-xl font-semibold tracking-[-0.035em] sm:text-2xl">
+              {currentCategory.title}
+            </h3>
+
+            <p className="mt-3 max-w-sm text-sm leading-6 text-[#77756d]">
+              Find straightforward answers to common questions about shopping
+              with BSPX.
+            </p>
+
+            <div className="mt-7 border-t border-black/10 pt-5">
+              <p className="text-sm font-medium">
+                Still need help?
+              </p>
+
+              <p className="mt-2 text-sm leading-6 text-[#77756d]">
+                Send our team your question and include your order number
+                when relevant.
+              </p>
+
+              <a
+                href="mailto:bspxstudio@gmail.com?subject=BSPX%20Customer%20Support"
+                className="mt-5 inline-flex border-b border-[#171715] pb-1 text-[10px] font-semibold uppercase tracking-[0.12em] transition-colors hover:text-[#77756d]"
+              >
+                Contact customer support
+              </a>
+            </div>
+          </aside>
+
+          {/* Right accordion */}
+          <div className="min-w-0">
+            <div className="mb-3 flex items-center justify-between gap-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#77756d]">
+                {currentCategory.title} questions
+              </p>
+
+              <p className="text-[10px] text-[#77756d]">
+                {currentCategory.faqs.length} answers
+              </p>
+            </div>
+
+            <div className="border-t border-black/10">
+              {currentCategory.faqs.map((faq, index) => {
+                const isOpen = openIndex === index;
+                const answerId = `faq-answer-${activeCategory}-${index}`;
+
+                return (
+                  <article
+                    key={faq.question}
+                    className="border-b border-black/10"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleFAQ(index)}
+                      aria-expanded={isOpen}
+                      aria-controls={answerId}
+                      className="flex w-full items-center justify-between gap-5 py-5 text-left sm:py-6"
+                    >
+                      <span className="text-sm font-medium leading-6 tracking-[-0.01em] sm:text-base">
+                        {faq.question}
+                      </span>
+
+                      <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#77756d]">
+                        {isOpen ? "Hide" : "View"}
+                      </span>
+                    </button>
+
+                    <div
+                      id={answerId}
+                      hidden={!isOpen}
+                      className="pb-5 sm:pb-6"
+                    >
+                      <p className="max-w-3xl whitespace-pre-line text-sm leading-7 text-[#77756d]">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Right FAQ Accordion */}
-        <div>
-          <div className="mb-8">
-            <p className="font-['Montserrat',sans-serif] text-[10px] font-semibold uppercase tracking-[0.28em] text-[#FF7A00]">
-              {faqCategories[openCategory].title}
+        {/* Bottom call to action */}
+        <div className="mt-12 flex flex-col gap-5 border-t border-black/10 pt-7 sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#77756d]">
+              The BSPX collection
             </p>
+
+            <h3 className="mt-2 text-xl font-semibold tracking-[-0.035em] sm:text-2xl">
+              Found your answers? Find your fit.
+            </h3>
           </div>
 
-          <div className="space-y-4">
-            {faqCategories[openCategory].faqs.map((faq, idx) => {
-              const isOpen = openIndex === idx;
-
-              return (
-                <div
-                  key={faq.question}
-                  className={`border bg-white/[0.035] transition-all duration-500 ${
-                    isOpen
-                      ? "border-[#FF7A00]/35"
-                      : "border-white/10 hover:border-white/20"
-                  }`}
-                >
-                  <button
-                    onClick={() => toggleFAQ(openCategory, idx)}
-                    className="flex w-full items-center justify-between gap-8 px-5 py-5 text-left md:px-7"
-                  >
-                    <span className="font-['Montserrat',sans-serif] text-sm font-semibold leading-snug text-white md:text-base">
-                      {faq.question}
-                    </span>
-
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center text-white/70">
-                      {isOpen ? (
-                        <Minus className="h-4 w-4" />
-                      ) : (
-                        <Plus className="h-4 w-4" />
-                      )}
-                    </span>
-                  </button>
-
-                  <div
-                    className={`overflow-hidden px-5 transition-all duration-500 ease-in-out md:px-7 ${
-                      isOpen
-                        ? "max-h-[420px] pb-6 opacity-100"
-                        : "max-h-0 pb-0 opacity-0"
-                    }`}
-                  >
-                    <p className="border-t border-white/10 pt-5 text-sm leading-relaxed text-white/45 whitespace-pre-line">
-                      {faq.answer}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <a
+            href="#bspx-products"
+            className="inline-flex w-fit items-center justify-center bg-[#171715] px-7 py-3.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#393934]"
+          >
+            Shop T-shirts
+          </a>
         </div>
       </div>
     </section>

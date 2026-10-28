@@ -1,342 +1,580 @@
+
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import {
-  MapPin,
-  Mail,
-  Phone,
-  Instagram,
-  Facebook,
-  Linkedin,
-  Send,
-  Clock,
-  CheckCircle2
-} from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    service: "",
-    date: "",
+    topic: "Order enquiry",
+    orderNumber: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [formError, setFormError] = useState("");
+
+  const contactEmail = "bspxstudio@gmail.com";
+  const contactPhone = "+918531985733";
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+
+    setFormError("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", phone: "", service: "", date: "", message: "" });
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setIsSubmitted(false), 5000);
-    }, 1500);
+
+    const subject = encodeURIComponent(
+      `BSPX Contact Enquiry - ${formData.topic}`
+    );
+
+    const body = encodeURIComponent(
+      `Hello BSPX Team,
+
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || "Not provided"}
+Enquiry Type: ${formData.topic}
+Order Number: ${formData.orderNumber || "Not applicable"}
+
+Message:
+${formData.message}
+
+Thank you.`
+    );
+
+    setFormError(
+      "Your email app will open so you can review and send your enquiry."
+    );
+
+    window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
   };
+
+  const faqs = [
+    {
+      question: "How can I track my order?",
+      answer:
+        "Use the order tracking link provided in your shipping confirmation, or contact our team with your order number.",
+    },
+    {
+      question: "How do I choose the right T-shirt size?",
+      answer:
+        "Check the size chart on the product page before ordering. If you need help with the fit, send us the product name and your usual size.",
+    },
+    {
+      question: "Can I request a return or exchange?",
+      answer:
+        "Return and exchange eligibility depends on BSPX's published policy. Contact us with your order number and the reason for your request.",
+    },
+  ];
 
   const schemaOrgJSONLD = {
     "@context": "https://schema.org",
-    "@type": "PhotographyBusiness",
-    "name": "BSPX Studio",
-    "image": "https://yourdomain.com/logo.webp", // Update with your actual logo URL
-    "email": "bspxstudio@gmail.com",
-    "telephone": "+919876543210", // Update with your actual phone number
-    "address": {
+    "@type": "ClothingStore",
+    name: "BSPX",
+    email: contactEmail,
+    telephone: contactPhone,
+    address: {
       "@type": "PostalAddress",
-      "addressLocality": "Coimbatore",
-      "addressRegion": "Tamil Nadu",
-      "addressCountry": "IN"
+      addressLocality: "Coimbatore",
+      addressRegion: "Tamil Nadu",
+      addressCountry: "IN",
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-      ],
-      "opens": "09:00",
-      "closes": "20:00"
-    },
-    "url": "https://yourdomain.com/contact"
+    url: "https://yourdomain.com/contact",
   };
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] font-['Montserrat',sans-serif] text-white">
+    <main className="bspx-contact min-h-screen bg-[#f8f7f3] text-[#20211d]">
       <Helmet>
-        <title>Contact BSPX Studio | Book Your Shoot Today</title>
-        <meta name="description" content="Get in touch with BSPX Studio. Based in Coimbatore and traveling across India for weddings, events, and premium portrait photography. Request a quote today." />
-        <link rel="canonical" href="https://yourdomain.com/contact" />
-        <script type="application/ld+json">{JSON.stringify(schemaOrgJSONLD)}</script>
+        <title>Contact BSPX | T-Shirts & Clothing Support</title>
+
+        <meta
+          name="description"
+          content="Contact BSPX for T-shirt orders, size and fit guidance, shipping questions, returns and product enquiries. Our team is here to help."
+        />
+
+        <meta
+          name="keywords"
+          content="BSPX contact, T-shirt support, clothing enquiries, order tracking, T-shirt size help, clothing returns"
+        />
+
+        <link
+          rel="canonical"
+          href="https://yourdomain.com/contact"
+        />
+
+        <script type="application/ld+json">
+          {JSON.stringify(schemaOrgJSONLD)}
+        </script>
       </Helmet>
 
-      {/* --- BACKGROUND EFFECTS --- */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[#0A0A0A]" />
-        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-[#1C1C1C]/50 to-transparent" />
-        <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-[#D4A53A]/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[30vw] h-[30vw] bg-[#1E3A5F]/10 rounded-full blur-[100px]" />
-        
-        {/* Faded Background Text */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-30">
-          <h2 className="select-none font-['Cormorant_Garamond',serif] text-[8rem] font-bold tracking-widest text-white/[0.03] md:text-[14rem] lg:text-[20rem]">
-            HELLO
-          </h2>
-        </div>
-      </div>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
-      <div className="relative z-10 mx-auto max-w-[1700px] px-6 py-32 md:px-12 lg:px-20 lg:py-40">
-        
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-24">
-          
-          {/* --- LEFT COLUMN: INFO & VIBES --- */}
-          <div className="lg:col-span-5 flex flex-col justify-between">
+        .bspx-contact {
+          font-family: 'DM Sans', sans-serif;
+        }
+
+        .bspx-contact h1,
+        .bspx-contact h2,
+        .bspx-contact h3 {
+          font-family: 'Manrope', sans-serif;
+        }
+
+        .bspx-contact input,
+        .bspx-contact select,
+        .bspx-contact textarea,
+        .bspx-contact button,
+        .bspx-contact a {
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .bspx-contact input:focus,
+        .bspx-contact select:focus,
+        .bspx-contact textarea:focus {
+          outline: none;
+          border-color: #777b61;
+          box-shadow: 0 0 0 2px rgba(119, 123, 97, .12);
+        }
+
+        .bspx-contact .contact-image {
+          transition: transform .65s ease;
+        }
+
+        .bspx-contact .contact-image-wrap:hover .contact-image {
+          transform: scale(1.035);
+        }
+
+        .bspx-contact .contact-link {
+          transition: color .2s ease, background .2s ease;
+        }
+
+        @media (max-width: 640px) {
+          .bspx-contact .contact-form {
+            padding: 22px 18px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .bspx-contact *,
+          .bspx-contact *::before,
+          .bspx-contact *::after {
+            transition-duration: .01ms !important;
+          }
+        }
+      `}</style>
+
+      <div className="mx-auto max-w-[1440px] px-5 pb-16 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-24">
+
+        {/* SECTION 1 — CONTACT HERO */}
+        <section className="mb-12 border-b border-[#deded5] pb-10 sm:mb-16 sm:pb-12">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#777b61]">
+            BSPX Customer Care
+          </p>
+
+          <div className="grid gap-6 md:grid-cols-[1.2fr_0.8fr] md:items-end">
             <div>
-              <div className="mb-12 flex items-start justify-between">
-                <p className="font-['Cormorant_Garamond',serif] text-4xl font-bold text-white">
-                  04<span className="text-sm italic text-white/50">/05</span>
-                </p>
-                <div className="h-20 w-px bg-white/25" />
-              </div>
+              <h1 className="mb-4 max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.045em] sm:text-4xl lg:text-5xl">
+                Need a hand?
+                <span className="block text-[#777b61]">
+                  We're here to help.
+                </span>
+              </h1>
 
-              <p className="mb-4 font-['Montserrat',sans-serif] text-[10px] font-black uppercase tracking-[0.3em] text-[#D4A53A]">
+              <p className="max-w-xl text-sm leading-6 text-[#73736c] sm:text-base">
+                Questions about your order, the perfect fit or your next
+                favourite T-shirt? Get in touch with the BSPX team.
+              </p>
+            </div>
+
+            <p className="max-w-sm text-sm leading-6 text-[#77776f] md:justify-self-end">
+              Real questions deserve clear answers. Tell us what you need and
+              include your order details when relevant.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION 2 — CONTACT DETAILS */}
+        <section className="mb-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:mb-20">
+          <div className="rounded-lg border border-[#e2e0d8] bg-white p-6 sm:p-7">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#777b61]">
+              Email Support
+            </p>
+
+            <h2 className="mb-2 text-lg font-semibold">
+              Send us an email
+            </h2>
+
+            <p className="mb-5 text-sm leading-6 text-[#77776f]">
+              For product questions, order assistance and general enquiries.
+            </p>
+
+            <a
+              href={`mailto:${contactEmail}`}
+              className="contact-link break-all text-sm font-semibold hover:text-[#777b61]"
+            >
+              {contactEmail}
+            </a>
+          </div>
+
+          <div className="rounded-lg border border-[#e2e0d8] bg-white p-6 sm:p-7">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#777b61]">
+              Phone Support
+            </p>
+
+            <h2 className="mb-2 text-lg font-semibold">
+              Talk to our team
+            </h2>
+
+            <p className="mb-5 text-sm leading-6 text-[#77776f]">
+              Prefer a conversation? Call us about your shopping questions.
+            </p>
+
+            <a
+              href={`tel:${contactPhone}`}
+              className="contact-link text-sm font-semibold hover:text-[#777b61]"
+            >
+              +91 85319 85733
+            </a>
+          </div>
+
+          <div className="rounded-lg border border-[#e2e0d8] bg-white p-6 sm:p-7 sm:col-span-2 lg:col-span-1">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#777b61]">
+              Our Location
+            </p>
+
+            <h2 className="mb-2 text-lg font-semibold">
+              Coimbatore, India
+            </h2>
+
+            <p className="mb-5 text-sm leading-6 text-[#77776f]">
+              BSPX clothing enquiries from Coimbatore and across India are
+              welcome.
+            </p>
+
+            <span className="text-sm font-medium text-[#777b61]">
+              Tamil Nadu, India
+            </span>
+          </div>
+        </section>
+
+        {/* SECTION 3 — WHAT CAN WE HELP WITH */}
+        <section className="mb-14 sm:mb-20">
+          <div className="mb-6">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#777b61]">
+              Customer Support
+            </p>
+
+            <h2 className="text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
+              What can we help you with?
+            </h2>
+
+            <p className="mt-3 max-w-xl text-sm leading-6 text-[#77776f]">
+              Choose the topic that best describes your question. This helps
+              you provide the right details in your message.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                number: "01",
+                title: "Orders",
+                description:
+                  "Order status, confirmations and order-related questions.",
+              },
+              {
+                number: "02",
+                title: "Size & Fit",
+                description:
+                  "T-shirt measurements, oversized fits and product guidance.",
+              },
+              {
+                number: "03",
+                title: "Shipping",
+                description:
+                  "Delivery timelines, shipping details and tracking help.",
+              },
+              {
+                number: "04",
+                title: "Returns",
+                description:
+                  "Return, exchange and eligible order issue enquiries.",
+              },
+            ].map((item) => (
+              <div
+                key={item.number}
+                className="rounded-lg border border-[#e2e0d8] p-5 sm:p-6"
+              >
+                <p className="mb-5 text-xs font-semibold text-[#99998f]">
+                  {item.number}
+                </p>
+
+                <h3 className="mb-2 text-base font-semibold">
+                  {item.title}
+                </h3>
+
+                <p className="text-sm leading-6 text-[#77776f]">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* SECTION 4 — CONTACT FORM */}
+        <section
+          id="contact-form"
+          className="mb-16 grid gap-8 rounded-xl bg-[#eae9e1] p-5 sm:p-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12 lg:p-12 sm:mb-20"
+        >
+          <div className="flex flex-col justify-between">
+            <div>
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#777b61]">
                 Get In Touch
               </p>
-              
-              <h1 className="font-['Cormorant_Garamond',serif] text-6xl leading-[1.05] text-white md:text-7xl lg:text-8xl mb-8">
-                Let's Tell<br />
-                <span className="italic text-[#D4A53A]">Your Story.</span>
-              </h1>
-              
-              <p className="max-w-md text-sm leading-relaxed text-white/60 mb-12">
-                Whether you're planning a grand wedding, an intimate portrait session, or need a cinematic reel for your brand, we're ready with our cameras. Drop us a line and let's craft something beautiful together.
+
+              <h2 className="mb-4 max-w-md text-2xl font-semibold leading-tight tracking-[-0.04em] sm:text-3xl">
+                Let's sort it out.
+              </h2>
+
+              <p className="mb-8 max-w-md text-sm leading-6 text-[#6e6e64]">
+                Fill in the details below and tell us how we can help. If
+                you're contacting us about an existing order, add the order
+                number so it's easier to identify.
               </p>
             </div>
 
-            <div className="space-y-8 border-l border-white/10 pl-6 lg:pl-10">
-              {/* Contact Blocks */}
-              <div className="group">
-                <p className="mb-2 font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">Email Us</p>
-                <a href="mailto:bspxstudio@gmail.com" className="inline-flex items-center gap-3 text-lg font-medium text-white transition-colors hover:text-[#D4A53A]">
-                  <Mail className="h-5 w-5 text-[#D4A53A]" />
-                  bspxstudio@gmail.com
-                </a>
-              </div>
-
-              <div className="group">
-                <p className="mb-2 font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">Call Us</p>
-                <a href="tel:+919876543210" className="inline-flex items-center gap-3 text-lg font-medium text-white transition-colors hover:text-[#D4A53A]">
-                  <Phone className="h-5 w-5 text-[#D4A53A]" />
-                  +91 8531985733
-                </a>
-              </div>
-
-              <div className="group">
-                <p className="mb-2 font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">Studio Location</p>
-                <div className="inline-flex items-start gap-3 text-sm leading-relaxed text-white/80">
-                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#D4A53A]" />
-                  <p>Coimbatore, Tamil Nadu, India.<br /><span className="text-white/40 text-xs">Available for travel nationwide.</span></p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-16 flex items-center gap-6 border-t border-white/10 pt-8">
-              <p className="font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">Socials</p>
-              <div className="flex items-center gap-4">
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all hover:border-[#D4A53A] hover:bg-[#D4A53A] hover:text-black">
-                  <Instagram className="h-4 w-4" />
-                </a>
-                <a href="https://facebook.com" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all hover:border-[#D4A53A] hover:bg-[#D4A53A] hover:text-black">
-                  <Facebook className="h-4 w-4" />
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all hover:border-[#D4A53A] hover:bg-[#D4A53A] hover:text-black">
-                  <Linkedin className="h-4 w-4" />
-                </a>
-              </div>
+            <div className="contact-image-wrap relative hidden overflow-hidden rounded-lg bg-[#d9d8cf] lg:block">
+              <img
+                src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=85"
+                alt="Everyday T-shirt collection"
+                className="contact-image h-[280px] w-full object-cover"
+                loading="lazy"
+              />
             </div>
           </div>
 
-          {/* --- RIGHT COLUMN: CONTACT FORM --- */}
-          <div className="lg:col-span-7">
-            <div className="relative rounded-[2rem] border border-white/10 bg-[#111111]/60 p-8 shadow-[0_32px_90px_rgba(0,0,0,0.6)] backdrop-blur-3xl sm:p-12">
-              <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-gradient-to-br from-white/5 to-transparent opacity-50" />
-              
-              <div className="relative z-10 mb-10 flex items-center gap-4 rounded-2xl bg-[#D4A53A]/10 p-4 border border-[#D4A53A]/20">
-                <Clock className="h-5 w-5 text-[#D4A53A]" />
-                <p className="text-xs font-medium text-[#D4A53A]">We typically respond within 24 hours to set up an initial consultation.</p>
+          <div className="contact-form rounded-lg border border-[#deded5] bg-white p-6 sm:p-8">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-2 block text-xs font-semibold"
+                  >
+                    Full name *
+                  </label>
+
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    autoComplete="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    className="w-full rounded-md border border-[#deded5] bg-[#fbfaf7] px-4 py-3 text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block text-xs font-semibold"
+                  >
+                    Email address *
+                  </label>
+
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="you@example.com"
+                    className="w-full rounded-md border border-[#deded5] bg-[#fbfaf7] px-4 py-3 text-sm"
+                  />
+                </div>
               </div>
 
-              {isSubmitted ? (
-                <div className="flex h-[500px] flex-col items-center justify-center text-center animate-in fade-in zoom-in duration-500">
-                  <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-[#D4A53A]/20 border border-[#D4A53A]/30">
-                    <CheckCircle2 className="h-12 w-12 text-[#D4A53A]" />
-                  </div>
-                  <h3 className="font-['Cormorant_Garamond',serif] text-4xl text-white mb-4">Request Sent Successfully</h3>
-                  <p className="text-sm text-white/60 max-w-sm">
-                    Thank you for reaching out to BSPX Studio. We have received your details and will be in touch shortly.
-                  </p>
-                  <button 
-                    onClick={() => setIsSubmitted(false)}
-                    className="mt-8 font-['Montserrat',sans-serif] text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A53A] hover:text-white transition-colors"
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="mb-2 block text-xs font-semibold"
                   >
-                    Send Another Message
-                  </button>
+                    Phone number
+                  </label>
+
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+91"
+                    className="w-full rounded-md border border-[#deded5] bg-[#fbfaf7] px-4 py-3 text-sm"
+                  />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="relative z-10 space-y-8">
-                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-                    {/* Name */}
-                    <div className="group relative">
-                      <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="peer w-full border-b border-white/20 bg-transparent py-3 text-sm text-white placeholder-transparent focus:border-[#D4A53A] focus:outline-none transition-colors"
-                        placeholder="Name"
-                      />
-                      <label 
-                        htmlFor="name" 
-                        className="absolute left-0 -top-3.5 text-[10px] font-bold uppercase tracking-widest text-white/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:-top-3.5 peer-focus:text-[10px] peer-focus:font-bold peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-[#D4A53A]"
-                      >
-                        Your Name
-                      </label>
-                    </div>
 
-                    {/* Phone */}
-                    <div className="group relative">
-                      <input
-                        type="tel"
-                        name="phone"
-                        id="phone"
-                        required
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="peer w-full border-b border-white/20 bg-transparent py-3 text-sm text-white placeholder-transparent focus:border-[#D4A53A] focus:outline-none transition-colors"
-                        placeholder="Phone"
-                      />
-                      <label 
-                        htmlFor="phone" 
-                        className="absolute left-0 -top-3.5 text-[10px] font-bold uppercase tracking-widest text-white/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:-top-3.5 peer-focus:text-[10px] peer-focus:font-bold peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-[#D4A53A]"
-                      >
-                        Phone Number
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Email */}
-                  <div className="group relative">
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="peer w-full border-b border-white/20 bg-transparent py-3 text-sm text-white placeholder-transparent focus:border-[#D4A53A] focus:outline-none transition-colors"
-                      placeholder="Email"
-                    />
-                    <label 
-                      htmlFor="email" 
-                      className="absolute left-0 -top-3.5 text-[10px] font-bold uppercase tracking-widest text-white/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:-top-3.5 peer-focus:text-[10px] peer-focus:font-bold peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-[#D4A53A]"
-                    >
-                      Email Address
-                    </label>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-                    {/* Service Type */}
-                    <div className="group relative">
-                      <select
-                        name="service"
-                        id="service"
-                        required
-                        value={formData.service}
-                        onChange={handleChange}
-                        className={`w-full border-b border-white/20 bg-transparent py-3 text-sm focus:border-[#D4A53A] focus:outline-none transition-colors cursor-pointer appearance-none ${formData.service ? 'text-white' : 'text-white/40'}`}
-                      >
-                        <option value="" disabled className="bg-[#111] text-white/50">Select a Service</option>
-                        <option value="Wedding" className="bg-[#111] text-white">Wedding Photography</option>
-                        <option value="Outdoor/Portrait" className="bg-[#111] text-white">Outdoor / Portrait</option>
-                        <option value="Baby Shoot" className="bg-[#111] text-white">Baby Shoot</option>
-                        <option value="Events" className="bg-[#111] text-white">Event Coverage</option>
-                        <option value="Reels/Video" className="bg-[#111] text-white">Reels & Video Edits</option>
-                        <option value="Other" className="bg-[#111] text-white">Other</option>
-                      </select>
-                      <label 
-                        htmlFor="service" 
-                        className="absolute left-0 -top-3.5 text-[10px] font-bold uppercase tracking-widest text-[#D4A53A]"
-                      >
-                        Interested In
-                      </label>
-                    </div>
-
-                    {/* Date */}
-                    <div className="group relative">
-                      <input
-                        type="date"
-                        name="date"
-                        id="date"
-                        value={formData.date}
-                        onChange={handleChange}
-                        className="w-full border-b border-white/20 bg-transparent py-3 text-sm text-white focus:border-[#D4A53A] focus:outline-none transition-colors cursor-pointer dark:[color-scheme:dark]"
-                      />
-                      <label 
-                        htmlFor="date" 
-                        className="absolute left-0 -top-3.5 text-[10px] font-bold uppercase tracking-widest text-[#D4A53A]"
-                      >
-                        Event Date (Optional)
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Message */}
-                  <div className="group relative pt-4">
-                    <textarea
-                      name="message"
-                      id="message"
-                      required
-                      rows="4"
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="peer w-full border-b border-white/20 bg-transparent py-3 text-sm text-white placeholder-transparent focus:border-[#D4A53A] focus:outline-none transition-colors resize-none"
-                      placeholder="Message"
-                    />
-                    <label 
-                      htmlFor="message" 
-                      className="absolute left-0 top-0 text-[10px] font-bold uppercase tracking-widest text-white/40 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-0 peer-focus:text-[10px] peer-focus:font-bold peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-[#D4A53A]"
-                    >
-                      Tell us about your vision
-                    </label>
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#D4A53A] px-9 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-widest text-[#0A0A0A] shadow-[0_15px_45px_rgba(212,165,58,0.25)] transition-all duration-300 hover:bg-[#FF7A00] hover:text-white active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed sm:w-auto"
+                <div>
+                  <label
+                    htmlFor="topic"
+                    className="mb-2 block text-xs font-semibold"
                   >
-                    {isSubmitting ? (
-                      "Sending..."
-                    ) : (
-                      <>
-                        Send Inquiry
-                        <Send className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                      </>
-                    )}
-                  </button>
-                </form>
+                    Enquiry type *
+                  </label>
+
+                  <select
+                    id="topic"
+                    name="topic"
+                    required
+                    value={formData.topic}
+                    onChange={handleChange}
+                    className="w-full rounded-md border border-[#deded5] bg-[#fbfaf7] px-4 py-3 text-sm"
+                  >
+                    <option>Order enquiry</option>
+                    <option>Product information</option>
+                    <option>Size and fit</option>
+                    <option>Shipping and delivery</option>
+                    <option>Return or exchange</option>
+                    <option>Payment issue</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="orderNumber"
+                  className="mb-2 block text-xs font-semibold"
+                >
+                  Order number
+                  <span className="ml-1 font-normal text-[#8b8b82]">
+                    (optional)
+                  </span>
+                </label>
+
+                <input
+                  id="orderNumber"
+                  name="orderNumber"
+                  type="text"
+                  value={formData.orderNumber}
+                  onChange={handleChange}
+                  placeholder="e.g. BSPX-1001"
+                  className="w-full rounded-md border border-[#deded5] bg-[#fbfaf7] px-4 py-3 text-sm"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-2 block text-xs font-semibold"
+                >
+                  Your message *
+                </label>
+
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={5}
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell us how we can help..."
+                  className="w-full resize-y rounded-md border border-[#deded5] bg-[#fbfaf7] px-4 py-3 text-sm leading-6"
+                />
+              </div>
+
+              {formError && (
+                <p
+                  role="status"
+                  className="text-sm leading-6 text-[#777b61]"
+                >
+                  {formError}
+                </p>
               )}
-            </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-md bg-[#20211d] px-6 py-4 text-xs font-bold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#777b61] sm:w-auto"
+              >
+                Continue to email
+              </button>
+
+              <p className="text-xs leading-5 text-[#85857d]">
+                Your email application will open with your enquiry prepared.
+                Review it and press Send to contact BSPX.
+              </p>
+            </form>
           </div>
-        </div>
+        </section>
+
+        {/* SECTION 5 — FREQUENTLY ASKED QUESTIONS */}
+        <section className="mb-16 sm:mb-20">
+          <div className="mb-7 max-w-xl">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#777b61]">
+              Quick Answers
+            </p>
+
+            <h2 className="text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">
+              Frequently asked questions
+            </h2>
+          </div>
+
+          <div className="border-t border-[#deded5]">
+            {faqs.map((faq, index) => (
+              <details
+                key={faq.question}
+                className="group border-b border-[#deded5] py-5"
+              >
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-sm font-semibold sm:text-base">
+                  <span>{faq.question}</span>
+
+                  <span className="text-lg font-normal text-[#777b61] transition-transform group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+
+                <p className="max-w-3xl pt-4 text-sm leading-6 text-[#77776f]">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        {/* SECTION 6 — FINAL CTA */}
+        <section className="rounded-xl bg-[#20211d] px-6 py-10 text-center text-white sm:px-10 sm:py-14">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.23em] text-[#b8bba4]">
+            The BSPX Collection
+          </p>
+
+          <h2 className="mx-auto mb-4 max-w-xl text-2xl font-semibold leading-tight tracking-[-0.035em] sm:text-3xl">
+            Your next everyday favourite is waiting.
+          </h2>
+
+          <p className="mx-auto mb-7 max-w-md text-sm leading-6 text-white/65">
+            Explore T-shirts and clothing essentials designed to fit your
+            everyday style.
+          </p>
+
+          <a
+            href="/shop"
+            className="inline-flex items-center justify-center rounded-md bg-[#f8f7f3] px-8 py-3.5 text-xs font-bold uppercase tracking-[0.13em] text-[#20211d] transition-colors hover:bg-[#dcdccf]"
+          >
+            Shop the collection
+          </a>
+        </section>
       </div>
     </main>
   );

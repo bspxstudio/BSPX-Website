@@ -1,417 +1,347 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { ChevronDown, Camera, Menu, X } from "lucide-react";
-import logo from "../../assests/cubelogo.webp";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
+  // Read the cart and calculate the total product quantity.
+  const updateCartCount = () => {
+    try {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+      const count = Array.isArray(cart)
+        ? cart.reduce(
+            (total, item) =>
+              total + Math.max(0, Number(item.quantity ?? 1) || 0),
+            0
+          )
+        : 0;
+
+      setCartCount(count);
+    } catch {
+      setCartCount(0);
+    }
   };
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
 
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        setCategoriesOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  // Keep the cart badge updated.
+  useEffect(() => {
+    updateCartCount();
+
+    const handleCartUpdated = () => {
+      updateCartCount();
+    };
+
+    window.addEventListener("cartUpdated", handleCartUpdated);
+    window.addEventListener("storage", handleCartUpdated);
+    window.addEventListener("focus", handleCartUpdated);
+
+    return () => {
+      window.removeEventListener("cartUpdated", handleCartUpdated);
+      window.removeEventListener("storage", handleCartUpdated);
+      window.removeEventListener("focus", handleCartUpdated);
+    };
+  }, []);
+
   const navLinks = [
     { name: "Home", path: "/" },
+    { name: "Shop", path: "/shop" },
     { name: "About", path: "/about" },
-    { name: "Work", path: "/work" },
-    { name: "Process", path: "/process" },
-    { name: "Pricing", path: "/pricing" },
-    { name: "Blog", path: "/blog" },
+    { name: "Journal", path: "/blog" },
     { name: "Contact", path: "/contact" },
   ];
 
-  const photoServices = [
-    { name: "Outdoor Portraits", path: "#" },
-    { name: "Birthday Shoots", path: "#" },
-    { name: "Couple Shoots", path: "#" },
-    { name: "Baby Shoots", path: "#" },
-    { name: "Pre-Wedding Shoots", path: "#" },
-    { name: "Post-Wedding Shoots", path: "#" },
-    { name: "Model Shoots", path: "#" },
-    { name: "Events", path: "#" },
+  const categories = [
+    { name: "All T-Shirts", href: "/shop" },
+    { name: "Oversized T-Shirts", href: "/shop?category=oversized" },
+    { name: "Regular Fit", href: "/shop?category=regular-fit" },
+    { name: "New Arrivals", href: "/shop?category=new-arrivals" },
   ];
 
-  const videoServices = [
-    { name: "Reels", path: "#" },
-    { name: "Highlight Edits", path: "#" },
-  ];
-
-  const productServices = [
-    { name: "Photo Frames", path: "#" },
-  ];
-
-  const mobileServiceItems = [
-    ...photoServices,
-    ...videoServices,
-    ...productServices,
-  ];
-
-  // Balanced split for desktop symmetry around the Services dropdown
-  const desktopLeftLinks = navLinks.slice(0, 3);
-  const desktopRightLinks = navLinks.slice(3);
-
-  const closeMobileMenu = () => {
+  const closeMenu = () => {
     setIsOpen(false);
-    setMobileServicesOpen(false);
+    setCategoriesOpen(false);
   };
 
-  return (
-    <header
-      className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
-        scrolled ? "pt-2 sm:pt-3" : "pt-3 sm:pt-5"
+  const linkClass = ({ isActive }) =>
+    `whitespace-nowrap px-3 py-2 text-[11px] font-medium transition-colors duration-200 ${
+      isActive
+        ? "text-[#171715]"
+        : "text-[#77756d] hover:text-[#171715]"
+    }`;
+
+  // Reusable cart link with quantity badge.
+  const CartLink = ({ mobile = false }) => (
+    <Link
+      to="/cart"
+      onClick={mobile ? closeMenu : undefined}
+      aria-label={`Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
+      className={`inline-flex shrink-0 items-center gap-2 font-medium text-[#171715] transition-colors hover:text-[#77756d] ${
+        mobile
+          ? "text-[10px] uppercase tracking-[0.08em]"
+          : "text-[11px]"
       }`}
     >
-      {/* ================= MAIN NAV BAR ================= */}
-      <nav className="relative mx-auto flex w-[calc(100%-24px)] max-w-[1700px] items-center justify-between rounded-full border border-white/10 bg-black/60 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-3xl transition-all duration-500 sm:w-[calc(100%-32px)] sm:px-5 md:px-6 lg:px-8 xl:px-8 2xl:px-10">
-        
-        {/* Advanced Glass Layers & Glows */}
-        <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/10 to-transparent opacity-50 mix-blend-overlay" />
-        <div className="pointer-events-none absolute left-4 top-1/2 h-20 w-40 -translate-y-1/2 rounded-full bg-[#D4A53A]/20 blur-3xl sm:left-10 sm:w-64" />
-        <div className="pointer-events-none absolute right-4 top-1/2 h-20 w-40 -translate-y-1/2 rounded-full bg-[#1E3A5F]/30 blur-3xl sm:right-10 sm:w-64" />
+      <span>Cart</span>
 
-        {/* Logo */}
-        <Link
-          to="/"
-          onClick={closeMobileMenu}
-          className="relative z-10 flex shrink-0 items-center"
-        >
-          <img
-            src={logo}
-            alt="BSPX Studio Logo"
-            className="h-11 w-auto object-contain sm:h-12 md:h-14 lg:h-14 xl:h-14 2xl:h-16"
-          />
-        </Link>
+      <span
+        aria-live="polite"
+        className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#171715] px-1.5 text-[10px] font-semibold tabular-nums text-white"
+      >
+        {cartCount}
+      </span>
+    </Link>
+  );
 
-        {/* ================= DESKTOP NAV ================= */}
-        <div className="relative z-10 hidden min-w-0 items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1.5 shadow-inner backdrop-blur-xl xl:flex 2xl:gap-2 2xl:p-2">
-          {desktopLeftLinks.map((link) => (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              className={({ isActive }) =>
-                `rounded-full px-3 py-2.5 font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.14em] transition-all duration-300 2xl:px-5 2xl:py-3 2xl:text-[10px] 2xl:tracking-[0.18em] ${
-                  isActive && link.path !== "#"
-                    ? "bg-white/15 text-[#D4A53A] shadow-sm"
-                    : "text-white/70 hover:bg-white/10 hover:text-white"
-                }`
-              }
-            >
-              {link.name}
-            </NavLink>
-          ))}
+  return (
+    <>
+      {/* Announcement strip */}
+      <div className="bg-[#171715] px-4 py-2 text-center text-[9px] font-medium uppercase tracking-[0.16em] text-white sm:text-[10px]">
+        Everyday essentials. Everyday style.
+      </div>
 
-          {/* Services Dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setServicesOpen((prev) => !prev)}
-              onBlur={() => setTimeout(() => setServicesOpen(false), 180)}
-              className={`flex items-center gap-2 rounded-full px-3 py-2.5 font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.14em] transition-all duration-300 focus:outline-none 2xl:px-5 2xl:py-3 2xl:text-[10px] 2xl:tracking-[0.18em] ${
-                servicesOpen
-                  ? "bg-white/15 text-[#D4A53A] shadow-sm"
-                  : "text-white/70 hover:bg-white/10 hover:text-white"
-              }`}
-            >
-              Services
-              <ChevronDown
-                className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                  servicesOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            <div
-              className={`absolute left-1/2 top-full z-[9999] mt-5 w-[min(92vw,560px)] -translate-x-1/2 rounded-[1.75rem] border border-white/10 bg-black/40 p-4 shadow-[0_32px_90px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition-all duration-300 origin-top 2xl:mt-6 2xl:rounded-[2rem] 2xl:p-5 ${
-                servicesOpen
-                  ? "visible scale-100 opacity-100"
-                  : "invisible scale-95 opacity-0"
-              }`}
-            >
-              {/* Glass overlay for dropdown */}
-              <div className="pointer-events-none absolute inset-0 rounded-[1.75rem] bg-gradient-to-br from-white/10 to-transparent opacity-20 2xl:rounded-[2rem]" />
-              
-              <div className="relative z-10 mb-4 rounded-[1.25rem] border border-white/10 bg-white/5 p-4 backdrop-blur-md 2xl:mb-5 2xl:rounded-[1.4rem] 2xl:p-5">
-                <p className="font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.3em] text-[#D4A53A]">
-                  What We Shoot
-                </p>
-                <p className="mt-2 text-xs leading-relaxed text-white/60">
-                  Photography, reels, edits, events, frames, and story-led
-                  visual services from Coimbatore to all India.
-                </p>
-              </div>
-
-              <div className="relative z-10 grid grid-cols-3 gap-4 2xl:gap-5">
-                <div>
-                  <p className="mb-3 font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.25em] text-white/40">
-                    Photos
-                  </p>
-                  <div className="space-y-1">
-                    {photoServices.map((service) => (
-                      <NavLink
-                        key={service.name}
-                        to={service.path}
-                        className="block rounded-xl px-3 py-2.5 font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-widest text-white/60 transition-all hover:bg-white/10 hover:text-white 2xl:text-[10px]"
-                      >
-                        {service.name}
-                      </NavLink>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="mb-3 font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.25em] text-white/40">
-                    Videos & Edits
-                  </p>
-                  <div className="space-y-1">
-                    {videoServices.map((service) => (
-                      <NavLink
-                        key={service.name}
-                        to={service.path}
-                        className="block rounded-xl px-3 py-2.5 font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-widest text-white/60 transition-all hover:bg-white/10 hover:text-white 2xl:text-[10px]"
-                      >
-                        {service.name}
-                      </NavLink>
-                    ))}
-                  </div>
-                  <p className="mb-3 mt-6 font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.25em] text-white/40">
-                    Products
-                  </p>
-                  <div className="space-y-1">
-                    {productServices.map((service) => (
-                      <NavLink
-                        key={service.name}
-                        to={service.path}
-                        className="block rounded-xl px-3 py-2.5 font-['Montserrat',sans-serif] text-[9px] font-bold uppercase tracking-widest text-white/60 transition-all hover:bg-white/10 hover:text-white 2xl:text-[10px]"
-                      >
-                        {service.name}
-                      </NavLink>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-col justify-between rounded-[1.4rem] border border-white/10 bg-white/5 p-4 backdrop-blur-md">
-                  <div>
-                    <p className="font-['Bebas_Neue',sans-serif] text-3xl leading-none tracking-wide text-white 2xl:text-4xl">
-                      Book
-                      <br />
-                      Better
-                      <br />
-                      Shoots.
-                    </p>
-                    <p className="mt-4 text-xs leading-relaxed text-white/50">
-                      Choose a service, share your city, and we reply within 24
-                      hours.
-                    </p>
-                  </div>
-                  <NavLink
-                    to="/services"
-                    className="mt-6 inline-flex w-fit font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.22em] text-[#D4A53A] transition hover:text-[#FF7A00] 2xl:text-[10px]"
-                  >
-                    View All Services →
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {desktopRightLinks.map((link) => (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              className={({ isActive }) =>
-                `rounded-full px-3 py-2.5 font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.14em] transition-all duration-300 2xl:px-5 2xl:py-3 2xl:text-[10px] 2xl:tracking-[0.18em] ${
-                  isActive && link.path !== "#"
-                    ? "bg-white/15 text-[#D4A53A] shadow-sm"
-                    : "text-white/70 hover:bg-white/10 hover:text-white"
-                }`
-              }
-            >
-              {link.name}
-            </NavLink>
-          ))}
-        </div>
-
-        {/* ================= DESKTOP CTA ================= */}
-        <div className="relative z-10 hidden shrink-0 lg:block xl:hidden 2xl:block">
-          <button
-            type="button"
-            onClick={() => scrollToSection("quote")}
-            className="group inline-flex items-center gap-2 rounded-full bg-[#D4A53A] px-5 py-3.5 font-['Montserrat',sans-serif] text-[9px] font-black uppercase tracking-[0.16em] text-[#0A0A0A] shadow-[0_15px_45px_rgba(212,165,58,0.28)] transition-all duration-300 hover:bg-[#FF7A00] hover:text-white active:scale-95 2xl:gap-3 2xl:px-9 2xl:py-4 2xl:text-[10px] 2xl:tracking-[0.22em]"
-          >
-            <Camera className="h-4 w-4" />
-            <span className="hidden 2xl:inline">Book Shoot</span>
-            <span className="2xl:hidden">Book</span>
-          </button>
-        </div>
-
-        {/* ================= MOBILE / TABLET MENU TOGGLE ================= */}
-        <button
-          type="button"
-          className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-xl transition hover:bg-white/20 sm:h-12 sm:w-12 xl:hidden"
-          onClick={() => setIsOpen((prev) => !prev)}
-          aria-label="Toggle menu"
-          aria-expanded={isOpen}
-        >
-          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </nav>
-
-      {/* ================= MOBILE / TABLET MENU ================= */}
-      <div
-        className={`mx-auto mt-3 w-[calc(100%-24px)] max-w-[900px] overflow-hidden rounded-[1.6rem] border border-white/10 bg-black/40 shadow-[0_32px_90px_rgba(0,0,0,0.6)] backdrop-blur-3xl transition-all duration-500 sm:mt-4 sm:w-[calc(100%-32px)] sm:rounded-[2rem] xl:hidden ${
-          isOpen
-            ? "max-h-[calc(100vh-104px)] opacity-100"
-            : "max-h-0 border-transparent opacity-0"
+      <header
+        className={`sticky top-0 z-50 w-full border-b border-black/10 bg-[#f5f4ef] font-['Poppins',sans-serif] transition-shadow duration-300 ${
+          scrolled ? "shadow-[0_5px_24px_rgba(0,0,0,0.05)]" : ""
         }`}
       >
-        <div className="pointer-events-none absolute inset-0 rounded-[1.6rem] bg-gradient-to-b from-white/10 to-transparent opacity-20 sm:rounded-[2rem]" />
-        
-        <div className="relative z-10 max-h-[calc(100vh-104px)] overflow-y-auto p-4 sm:p-5 md:p-6">
-          <div className="mb-4 flex items-center justify-center rounded-[1.25rem] border border-white/10 bg-white/5 p-4 backdrop-blur-md sm:mb-6 sm:p-5 md:p-6">
-            <img
-              src={logo}
-              alt="BSPX Studio Logo"
-              className="h-16 w-auto object-contain sm:h-20 md:h-24"
-            />
+        {/* Main navigation */}
+        <nav className="mx-auto flex min-h-[68px] max-w-[1600px] items-center justify-between gap-4 px-5 sm:px-8 lg:min-h-[76px] lg:px-12">
+          {/* Brand wordmark */}
+          <Link
+            to="/"
+            onClick={closeMenu}
+            aria-label="BSPX home"
+            className="relative z-10 shrink-0 text-[28px] font-bold leading-none tracking-[-0.09em] text-[#171715] sm:text-[32px]"
+          >
+            BSPX<span className="text-[#77756d]">.</span>
+          </Link>
+
+          {/* Desktop navigation */}
+          <div className="hidden items-center gap-1 lg:flex">
+            <NavLink to="/" end className={linkClass}>
+              Home
+            </NavLink>
+
+            <NavLink to="/shop" className={linkClass}>
+              Shop
+            </NavLink>
+
+            {/* Categories dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setCategoriesOpen(true)}
+              onMouseLeave={() => setCategoriesOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() =>
+                  setCategoriesOpen((previous) => !previous)
+                }
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    setCategoriesOpen(false);
+                  }
+                }}
+                aria-expanded={categoriesOpen}
+                className={`flex items-center gap-2 px-3 py-2 text-[11px] font-medium transition-colors ${
+                  categoriesOpen
+                    ? "text-[#171715]"
+                    : "text-[#77756d] hover:text-[#171715]"
+                }`}
+              >
+                Categories
+
+                <span
+                  aria-hidden="true"
+                  className={`mt-[-3px] inline-block h-1.5 w-1.5 rotate-45 border-b border-r border-current transition-transform ${
+                    categoriesOpen
+                      ? "translate-y-[2px] rotate-[225deg]"
+                      : ""
+                  }`}
+                />
+              </button>
+
+              {categoriesOpen && (
+                <div className="absolute left-0 top-full w-60 pt-3">
+                  <div className="border border-black/10 bg-white p-2 shadow-[0_16px_40px_rgba(0,0,0,0.08)]">
+                    {categories.map((category) => (
+                      <Link
+                        key={category.name}
+                        to={category.href}
+                        onClick={() => setCategoriesOpen(false)}
+                        className="block px-4 py-3 text-xs text-[#55544d] transition-colors hover:bg-[#f5f4ef] hover:text-[#171715]"
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <NavLink to="/about" className={linkClass}>
+              About
+            </NavLink>
+
+            <NavLink to="/blog" className={linkClass}>
+              Journal
+            </NavLink>
+
+            <NavLink to="/contact" className={linkClass}>
+              Contact
+            </NavLink>
           </div>
 
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {["Home", "About"].map((name) => {
-              const link = navLinks.find((item) => item.name === name);
+          {/* Desktop actions */}
+          <div className="hidden shrink-0 items-center gap-5 lg:flex">
+            <CartLink />
 
-              return (
-                <NavLink
-                  key={name}
-                  to={link.path}
-                  onClick={closeMobileMenu}
-                  className={({ isActive }) =>
-                    `rounded-2xl px-5 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-widest transition-all ${
-                      isActive && link.path !== "#"
-                        ? "bg-white/15 text-[#D4A53A]"
-                        : "text-white/70 hover:bg-white/10 hover:text-white"
-                    }`
-                  }
-                >
-                  {name}
-                </NavLink>
-              );
-            })}
+            <Link
+              to="/shop"
+              className="inline-flex items-center justify-center bg-[#171715] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#393934]"
+            >
+              Shop now
+            </Link>
+          </div>
+
+          {/* Mobile actions */}
+          <div className="flex items-center gap-3 lg:hidden">
+            <CartLink mobile />
 
             <button
               type="button"
-              onClick={() => setMobileServicesOpen((prev) => !prev)}
-              className="flex items-center justify-between rounded-2xl px-5 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-widest text-white/70 transition hover:bg-white/10 hover:text-white sm:col-span-2"
+              onClick={() => setIsOpen((previous) => !previous)}
+              aria-label={
+                isOpen ? "Close navigation menu" : "Open navigation menu"
+              }
+              aria-expanded={isOpen}
+              className="flex min-h-10 min-w-10 items-center justify-center border border-black/15 px-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#171715]"
             >
-              Services
-              <ChevronDown
-                className={`h-4 w-4 transition ${
-                  mobileServicesOpen ? "rotate-180" : ""
-                }`}
-              />
+              {isOpen ? "Close" : "Menu"}
             </button>
+          </div>
+        </nav>
 
-            <div
-              className={`overflow-hidden transition-all duration-500 sm:col-span-2 ${
-                mobileServicesOpen
-                  ? "max-h-[720px] opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="grid grid-cols-1 gap-2 border-l border-[#D4A53A]/30 pl-4 sm:grid-cols-2">
-                {mobileServiceItems.map((service) => (
-                  <NavLink
-                    key={service.name}
-                    to={service.path}
-                    onClick={closeMobileMenu}
-                    className="rounded-xl border border-white/10 px-4 py-3.5 font-['Montserrat',sans-serif] text-[10px] font-bold uppercase tracking-widest text-white/60 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white sm:px-5 sm:text-[11px]"
-                  >
-                    {service.name}
-                  </NavLink>
-                ))}
-              </div>
-            </div>
-
-            {[
-              "Work",
-              "Process",
-              "Pricing",
-              "Blog",
-              "Contact",
-            ].map((name) => {
-              const link = navLinks.find((item) => item.name === name);
-
-              return (
+        {/* Mobile menu */}
+        <div
+          className={`overflow-hidden border-t border-black/10 bg-[#f5f4ef] transition-[max-height,opacity] duration-300 ease-in-out lg:hidden ${
+            isOpen
+              ? "max-h-[85vh] overflow-y-auto opacity-100"
+              : "max-h-0 border-transparent opacity-0"
+          }`}
+          aria-hidden={!isOpen}
+        >
+          <div className="mx-auto max-w-[1600px] px-5 py-5 sm:px-8">
+            <div className="flex flex-col">
+              {navLinks.map((link) => (
                 <NavLink
-                  key={name}
+                  key={link.name}
                   to={link.path}
-                  onClick={closeMobileMenu}
+                  end={link.path === "/"}
+                  onClick={closeMenu}
+                  tabIndex={isOpen ? 0 : -1}
                   className={({ isActive }) =>
-                    `rounded-2xl px-5 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-widest transition-all ${
-                      isActive && link.path !== "#"
-                        ? "bg-white/15 text-[#D4A53A]"
-                        : "text-white/70 hover:bg-white/10 hover:text-white"
+                    `border-b border-black/10 py-4 text-sm font-medium transition-colors ${
+                      isActive
+                        ? "text-[#171715]"
+                        : "text-[#77756d] hover:text-[#171715]"
                     }`
                   }
                 >
-                  {name}
+                  {link.name}
                 </NavLink>
-              );
-            })}
-          </div>
+              ))}
 
-          <div className="my-5 h-px bg-white/10 sm:my-6" />
+              {/* Mobile categories */}
+              <button
+                type="button"
+                onClick={() =>
+                  setCategoriesOpen((previous) => !previous)
+                }
+                aria-expanded={categoriesOpen}
+                tabIndex={isOpen ? 0 : -1}
+                className="flex items-center justify-between border-b border-black/10 py-4 text-left text-sm font-medium text-[#171715]"
+              >
+                Categories
 
-          <div className="space-y-3 rounded-[1.5rem] border border-white/10 bg-white/5 p-4 backdrop-blur-md sm:p-5">
-            <a
-              href="mailto:bspxstudio@gmail.com"
-              className="block break-all font-['Montserrat',sans-serif] text-[11px] font-bold uppercase tracking-[0.16em] text-[#D4A53A] sm:text-xs sm:tracking-[0.18em]"
+                <span className="text-[10px] uppercase tracking-wider text-[#77756d]">
+                  {categoriesOpen ? "Hide" : "View"}
+                </span>
+              </button>
+
+              {categoriesOpen && (
+                <div className="border-b border-black/10 py-2 pl-4">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.name}
+                      to={category.href}
+                      onClick={closeMenu}
+                      tabIndex={isOpen ? 0 : -1}
+                      className="block py-3 text-xs text-[#77756d] transition-colors hover:text-[#171715]"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link
+              to="/shop"
+              onClick={closeMenu}
+              tabIndex={isOpen ? 0 : -1}
+              className="mt-5 flex w-full items-center justify-center bg-[#171715] px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#393934]"
             >
-              bspxstudio@gmail.com
-            </a>
+              Explore the collection
+            </Link>
 
-            <p className="font-['Montserrat',sans-serif] text-[10px] font-semibold uppercase tracking-[0.18em] text-white/50 sm:tracking-[0.2em]">
-              Coimbatore | Serving All India
-            </p>
+            <div className="mt-5 flex items-center justify-between text-[10px] uppercase tracking-[0.1em] text-[#77756d]">
+              <span>BSPX Clothing</span>
+              <span>Everyday essentials</span>
+            </div>
           </div>
-
-          <button
-            type="button"
-            onClick={() => {
-              scrollToSection("quote");
-              closeMobileMenu();
-            }}
-            className="mt-5 inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#D4A53A] px-7 py-4 font-['Montserrat',sans-serif] text-xs font-black uppercase tracking-widest text-[#0A0A0A]  hover:text-white sm:mt-7"
-          >
-            <Camera className="h-4 w-4" />
-            Book Your Shoot
-          </button>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
