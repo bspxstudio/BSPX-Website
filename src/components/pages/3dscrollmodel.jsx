@@ -76,31 +76,16 @@ export default function ClothScroll3D() {
           0%, 100% {
             margin-top: -8px;
           }
+
           50% {
             margin-top: 8px;
           }
         }
 
+        /* Hide hoodie on mobile and small screens */
         @media (max-width: 768px) {
           .hoodie-scene {
-            width: 42vw;
-          }
-
-          .hoodie-image {
-            width: min(100%, 220px);
-            max-height: 52vh;
-            right: 2%;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .hoodie-scene {
-            width: 45vw;
-          }
-
-          .hoodie-image {
-            width: 100%;
-            max-height: 42vh;
+            display: none !important;
           }
         }
 
