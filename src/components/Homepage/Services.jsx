@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useStorefrontProducts } from "../../data/useAdminContent";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -12,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 
-const products = [
+const fallbackProducts = [
   {
     id: 1,
     name: "Essential Oversized Tee",
@@ -152,6 +153,28 @@ const formatPrice = (price) =>
 
 export default function Products() {
   const navigate = useNavigate();
+  const products = useStorefrontProducts(fallbackProducts).map((product) => {
+    const availableSizes = Array.isArray(product.sizes)
+      ? product.sizes
+      : Object.entries(product.sizes || {})
+          .filter(([, stock]) => Number(stock) > 0)
+          .map(([size]) => size);
+
+    return {
+      ...product,
+      rating: Number(product.rating) || 4.8,
+      reviews: Number(product.reviews) || 0,
+      tag: product.tag || (String(product.id).startsWith("admin-") ? "NEW ARRIVAL" : "ESSENTIAL"),
+      color: product.color || product.tone || "Classic",
+      colorHex: product.colorHex || "#d9d5ca",
+      bg: product.bg || "#e6e3d9",
+      image: product.image || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=90",
+      oldPrice: Number(product.oldPrice ?? product.comparePrice) || Number(product.price) || 0,
+      sizes: availableSizes.length ? availableSizes : ["S", "M", "L", "XL"],
+      description: product.description || "Designed for everyday comfort and effortless streetwear styling.",
+      category: product.category || "BSPX COLLECTION",
+    };
+  });
 
   const [cart, setCart] = useState(() => {
     try {

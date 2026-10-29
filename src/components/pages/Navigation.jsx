@@ -1,12 +1,16 @@
 
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Search, X } from "lucide-react";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   // Read the cart and calculate the total product quantity.
   const updateCartCount = () => {
@@ -53,6 +57,7 @@ export default function Navigation() {
       if (event.key === "Escape") {
         setIsOpen(false);
         setCategoriesOpen(false);
+        setSearchOpen(false);
       }
     };
 
@@ -100,6 +105,16 @@ export default function Navigation() {
   const closeMenu = () => {
     setIsOpen(false);
     setCategoriesOpen(false);
+  };
+
+  const submitSearch = (event) => {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    if (!query) return;
+    navigate(`/shop?search=${encodeURIComponent(query)}`);
+    setSearchOpen(false);
+    setSearchQuery("");
+    closeMenu();
   };
 
   const linkClass = ({ isActive }) =>
@@ -233,7 +248,31 @@ export default function Navigation() {
           </div>
 
           {/* Desktop actions */}
-          <div className="hidden shrink-0 items-center gap-5 lg:flex">
+          <div className="hidden shrink-0 items-center gap-4 lg:flex">
+            {searchOpen && (
+              <form onSubmit={submitSearch} className="flex items-center gap-2 rounded-full border border-black/15 bg-white px-3 py-2">
+                <Search size={15} className="shrink-0 text-[#77756d]" />
+                <input
+                  autoFocus
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search products..."
+                  aria-label="Search products"
+                  className="w-36 bg-transparent text-xs outline-none placeholder:text-[#aaa79e]"
+                />
+                <button type="submit" aria-label="Submit search" className="text-[10px] font-semibold uppercase tracking-wider">Go</button>
+              </form>
+            )}
+            <button
+              type="button"
+              onClick={() => setSearchOpen((previous) => !previous)}
+              aria-label={searchOpen ? "Close search" : "Search products"}
+              aria-expanded={searchOpen}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-black/15 text-[#171715] transition hover:bg-white"
+            >
+              {searchOpen ? <X size={17} /> : <Search size={17} />}
+            </button>
             <CartLink />
 
             <Link
@@ -245,7 +284,16 @@ export default function Navigation() {
           </div>
 
           {/* Mobile actions */}
-          <div className="flex items-center gap-3 lg:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              type="button"
+              onClick={() => setSearchOpen((previous) => !previous)}
+              aria-label={searchOpen ? "Close search" : "Search products"}
+              aria-expanded={searchOpen}
+              className="flex h-10 w-10 items-center justify-center border border-black/15 text-[#171715]"
+            >
+              {searchOpen ? <X size={17} /> : <Search size={17} />}
+            </button>
             <CartLink mobile />
 
             <button
@@ -261,6 +309,25 @@ export default function Navigation() {
             </button>
           </div>
         </nav>
+
+        {/* Search panel */}
+        {searchOpen && (
+          <div className="border-t border-black/10 bg-[#f5f4ef] px-5 py-4 lg:hidden">
+            <form onSubmit={submitSearch} className="mx-auto flex max-w-[1600px] items-center gap-3 border border-black/15 bg-white px-4 py-3">
+              <Search size={17} className="shrink-0 text-[#77756d]" />
+              <input
+                autoFocus
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search products..."
+                aria-label="Search products"
+                className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-[#aaa79e]"
+              />
+              <button type="submit" className="text-[10px] font-semibold uppercase tracking-wider text-[#171715]">Search</button>
+            </form>
+          </div>
+        )}
 
         {/* Mobile menu */}
         <div
